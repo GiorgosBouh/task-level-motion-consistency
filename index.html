@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Task-level Anomaly Explorer</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#111a33;
+      --muted:#9fb0d0;
+      --text:#eaf0ff;
+      --accent:#7aa2ff;
+      --border:rgba(255,255,255,.12);
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,#070b17,#0b1020); color:var(--text);}
+    .wrap{max-width:1200px;margin:0 auto;padding:24px;}
+    h1{font-size:22px;margin:0 0 6px}
+    p{margin:0 0 14px;color:var(--muted);line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+      border:1px solid var(--border); border-radius:14px; padding:14px;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    label{font-size:13px;color:var(--muted)}
+    select,input{background:rgba(0,0,0,.25);color:var(--text);border:1px solid var(--border);
+      padding:10px 10px;border-radius:10px;font-size:14px;outline:none}
+    input{min-width:220px}
+    button,a.btn{background:rgba(122,162,255,.15);color:var(--text);border:1px solid rgba(122,162,255,.35);
+      padding:10px 12px;border-radius:10px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+    button:hover,a.btn:hover{background:rgba(122,162,255,.22)}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;color:var(--muted)}
+    .status{font-size:13px;color:var(--muted)}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top;font-size:14px}
+    th{color:var(--muted);text-align:left;cursor:pointer;user-select:none}
+    tr:hover{background:rgba(255,255,255,.03)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:12px}
+    details{margin-top:6px}
+    details summary{cursor:pointer;color:var(--accent)}
+    .small{font-size:12px;color:var(--muted)}
+    .err{color:#ff8f8f}
+    .ok{color:#a8ffb0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Task-level Anomaly Explorer</h1>
+    <p>Interactive viewer for per-task anomaly scores + small-LLM explanations (static, GitHub Pages-friendly).</p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="row">
+          <div>
+            <label for="task">Task</label><br/>
+            <select id="task">
+              <option value="stand">stand</option>
+              <option value="chair">chair</option>
+              <option value="wheelchair">wheelchair</option>
+              <option value="sit">sit</option>
+              <option value="stand-frame">stand-frame</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="topn">Top N</label><br/>
+            <select id="topn">
+              <option>10</option>
+              <option selected>20</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="q">Search (subject id / path)</label><br/>
+            <input id="q" placeholder="e.g., 207 or 202_18_3" />
+          </div>
+
+          <div style="margin-left:auto" class="row">
+            <button id="reload">Reload</button>
+            <a class="btn" id="download" href="#" download>Download table (CSV)</a>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <span class="pill" id="filesBadge">files: —</span>
+          <span class="pill" id="rangeBadge">score01: —</span>
+          <span class="status" id="status">Ready.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="small">
+          Expects these files (relative paths):
+          <div class="mono">outputs/&lt;task&gt;_anomaly_scores.csv</div>
+          <div class="mono">outputs/&lt;task&gt;_anomaly_explanations.csv</div>
+        </div>
+
+        <table id="tbl">
+          <thead>
+            <tr>
+              <th data-k="rank">Rank</th>
+              <th data-k="score01">Score01</th>
+              <th data-k="mahalanobis_sq">Mahalanobis²</th>
+              <th data-k="subject_id">Subject</th>
+              <th data-k="path">Path</th>
+              <th data-k="explanation">Explanation</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="small" style="margin-top:10px">
+          Tip: click on table headers to sort. Explanations are shown if present in explanations CSV.
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const el = (id)=>document.getElementById(id);
+
+  function parseCSV(text){
+    // simple CSV parser for typical comma-separated, no multiline fields
+    const lines = text.trim().split(/\r?\n/);
+    const header = splitCSVLine(lines[0]);
+    const rows = [];
+    for(let i=1;i<lines.length;i++){
+      if(!lines[i].trim()) continue;
+      const parts = splitCSVLine(lines[i]);
+      const obj = {};
+      header.forEach((h, idx)=> obj[h] = (parts[idx] ?? "").trim());
+      rows.push(obj);
+    }
+    return rows;
+  }
+
+  function splitCSVLine(line){
+    // handles quoted commas
+    const out = [];
+    let cur = "", inQ = false;
+    for(let i=0;i<line.length;i++){
+      const c = line[i];
+      if(c === '"' ){
+        if(inQ && line[i+1] === '"'){ cur += '"'; i++; }
+        else inQ = !inQ;
+      } else if(c === ',' && !inQ){
+        out.push(cur); cur="";
+      } else cur += c;
+    }
+    out.push(cur);
+    return out;
+  }
+
+  async function fetchText(path){
+    const r = await fetch(path, {cache:"no-store"});
+    if(!r.ok) throw new Error(`Failed to fetch ${path} (${r.status})`);
+    return await r.text();
+  }
+
+  function toNum(x){
+    const n = Number(x);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function normalizeRows(scoreRows, explRows){
+    // Build map by path for explanations
+    const explByPath = new Map();
+    explRows.forEach(r=>{
+      // tolerate different column names
+      const p = r.path || r.file || r.trial || r.trial_path || "";
+      if(!p) return;
+      const exp = r.explanation || r.reason || r.summary || r.llm_explanation || "";
+      explByPath.set(p, exp);
+    });
+
+    const rows = scoreRows.map(r=>{
+      const path = r.path;
+      return {
+        rank: 0,
+        path,
+        subject_id: r.subject_id ?? r.subject ?? r.subj ?? "",
+        label: r.label ?? "",
+        mahalanobis_sq: toNum(r.mahalanobis_sq) ?? toNum(r.mahalanobis2) ?? null,
+        score01: toNum(r.score01) ?? null,
+        explanation: explByPath.get(path) || ""
+      };
+    });
+
+    // rank by mahalanobis_sq desc (fallback score01 desc)
+    rows.sort((a,b)=> (b.mahalanobis_sq ?? -1) - (a.mahalanobis_sq ?? -1) || (b.score01 ?? -1) - (a.score01 ?? -1));
+    rows.forEach((r,i)=> r.rank = i+1);
+    return rows;
+  }
+
+  let STATE = {rows:[], sortKey:"rank", sortAsc:true};
+
+  function render(){
+    const tbody = el("tbl").querySelector("tbody");
+    tbody.innerHTML = "";
+
+    const q = el("q").value.trim().toLowerCase();
+    const topn = Number(el("topn").value);
+
+    let rows = STATE.rows.slice(0);
+    if(q){
+      rows = rows.filter(r =>
+        String(r.subject_id).toLowerCase().includes(q) ||
+        String(r.path).toLowerCase().includes(q)
+      );
+    }
+
+    // sort
+    const k = STATE.sortKey;
+    const asc = STATE.sortAsc;
+    rows.sort((a,b)=>{
+      const av=a[k], bv=b[k];
+      // numeric if possible
+      const an = (typeof av==="number") ? av : toNum(av);
+      const bn = (typeof bv==="number") ? bv : toNum(bv);
+      let cmp = 0;
+      if(an!==null && bn!==null) cmp = an - bn;
+      else cmp = String(av??"").localeCompare(String(bv??""));
+      return asc ? cmp : -cmp;
+    });
+
+    const shown = rows.slice(0, topn);
+    shown.forEach(r=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${r.rank}</td>
+        <td>${r.score01 ?? ""}</td>
+        <td>${r.mahalanobis_sq ?? ""}</td>
+        <td>${r.subject_id ?? ""}</td>
+        <td class="mono">${escapeHtml(r.path ?? "")}</td>
+        <td>${renderExplanation(r.explanation)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // badges
+    el("filesBadge").textContent = `rows: ${STATE.rows.length} | showing: ${shown.length}`;
+    const s = STATE.rows.map(r=>r.score01).filter(v=>typeof v==="number");
+    if(s.length){
+      const min=Math.min(...s), max=Math.max(...s);
+      el("rangeBadge").textContent = `score01: ${min.toFixed(3)} → ${max.toFixed(3)}`;
+    } else {
+      el("rangeBadge").textContent = `score01: —`;
+    }
+
+    // download current view as CSV
+    const csv = toCSV(shown);
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = el("download");
+    a.href = url;
+    a.download = `${el("task").value}_top${topn}_anomalies.csv`;
+  }
+
+  function toCSV(rows){
+    const cols = ["rank","score01","mahalanobis_sq","subject_id","path","explanation"];
+    const esc = (v)=>{
+      const s = String(v ?? "");
+      if(/[",\n]/.test(s)) return `"${s.replace(/"/g,'""')}"`;
+      return s;
+    };
+    let out = cols.join(",") + "\n";
+    for(const r of rows){
+      out += cols.map(c=>esc(r[c])).join(",") + "\n";
+    }
+    return out;
+  }
+
+  function renderExplanation(text){
+    if(!text) return `<span class="small err">No explanation</span>`;
+    const safe = escapeHtml(text);
+    if(safe.length <= 160) return `<span>${safe}</span>`;
+    return `
+      <details>
+        <summary>Show</summary>
+        <div class="small">${safe}</div>
+      </details>
+    `;
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  }
+
+  async function load(){
+    const task = el("task").value;
+    const scoresPath = `outputs/${task}_anomaly_scores.csv`;
+    const explPath   = `outputs/${task}_anomaly_explanations.csv`;
+
+    el("status").innerHTML = `<span class="small">Loading…</span>`;
+    try{
+      const [scoresTxt, explTxt] = await Promise.all([
+        fetchText(scoresPath),
+        fetchText(explPath).catch(()=> "") // explanations optional
+      ]);
+
+      const scoreRows = parseCSV(scoresTxt);
+      const explRows  = explTxt ? parseCSV(explTxt) : [];
+
+      STATE.rows = normalizeRows(scoreRows, explRows);
+      el("status").innerHTML = `<span class="small ok">Loaded ${STATE.rows.length} rows for task=${task}.</span>`;
+      render();
+    }catch(e){
+      el("status").innerHTML = `<span class="small err">${escapeHtml(e.message)}</span>`;
+      STATE.rows = [];
+      render();
+    }
+  }
+
+  // sorting by clicking headers
+  document.querySelectorAll("th[data-k]").forEach(th=>{
+    th.addEventListener("click", ()=>{
+      const k = th.getAttribute("data-k");
+      if(STATE.sortKey === k) STATE.sortAsc = !STATE.sortAsc;
+      else { STATE.sortKey = k; STATE.sortAsc = true; }
+      render();
+    });
+  });
+
+  el("reload").addEventListener("click", load);
+  el("task").addEventListener("change", load);
+  el("topn").addEventListener("change", render);
+  el("q").addEventListener("input", render);
+
+  load();
+</script>
+</body>
+</html>
