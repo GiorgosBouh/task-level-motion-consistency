@@ -1,0 +1,9 @@
+cd ~/task-level-motion-consistency
+
+python anomaly_task.py --task stand --filelist filelists/files_stand.txt --data-root . --outdir outputs --topn 20
+python anomaly_task.py --task chair --filelist filelists/files_chair.txt --data-root . --outdir outputs --topn 20
+python anomaly_task.py --task wheelchair --filelist filelists/files_wheelchair.txt --data-root . --outdir outputs --topn 20
+python anomaly_task.py --task sit --filelist filelists/files_sit.txt --data-root . --outdir outputs --topn 20
+python anomaly_task.py --task stand-frame --filelist filelists/files_stand-frame.txt --data-root . --outdir outputs --topn 20
+
+ls -lh outputs | egrep '_(anomaly|feature)_' | head
