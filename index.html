@@ -13,35 +13,93 @@
       --accent:#7aa2ff;
       --border:rgba(255,255,255,.12);
     }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
-      background:linear-gradient(180deg,#070b17,#0b1020); color:var(--text);}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,#070b17,#0b1020);
+      color:var(--text);
+    }
     .wrap{max-width:1200px;margin:0 auto;padding:24px;}
     h1{font-size:22px;margin:0 0 6px}
     p{margin:0 0 14px;color:var(--muted);line-height:1.4}
     .grid{display:grid;grid-template-columns:1fr;gap:12px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
-      border:1px solid var(--border); border-radius:14px; padding:14px;}
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+    }
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     label{font-size:13px;color:var(--muted)}
-    select,input{background:rgba(0,0,0,.25);color:var(--text);border:1px solid var(--border);
-      padding:10px 10px;border-radius:10px;font-size:14px;outline:none}
+    select,input{
+      background:rgba(0,0,0,.25);
+      color:var(--text);
+      border:1px solid var(--border);
+      padding:10px 10px;
+      border-radius:10px;
+      font-size:14px;
+      outline:none
+    }
     input{min-width:220px}
-    button,a.btn{background:rgba(122,162,255,.15);color:var(--text);border:1px solid rgba(122,162,255,.35);
-      padding:10px 12px;border-radius:10px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+    button,a.btn{
+      background:rgba(122,162,255,.15);
+      color:var(--text);
+      border:1px solid rgba(122,162,255,.35);
+      padding:10px 12px;
+      border-radius:10px;
+      font-size:14px;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-block
+    }
     button:hover,a.btn:hover{background:rgba(122,162,255,.22)}
-    .pill{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;color:var(--muted)}
+    .pill{
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      font-size:12px;
+      color:var(--muted)
+    }
     .status{font-size:13px;color:var(--muted)}
     table{width:100%;border-collapse:collapse;margin-top:10px}
-    th,td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top;font-size:14px}
-    th{color:var(--muted);text-align:left;cursor:pointer;user-select:none}
+    th,td{
+      padding:10px;
+      border-bottom:1px solid var(--border);
+      vertical-align:top;
+      font-size:14px
+    }
+    th{
+      color:var(--muted);
+      text-align:left;
+      cursor:pointer;
+      user-select:none
+    }
     tr:hover{background:rgba(255,255,255,.03)}
-    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:12px}
+    .mono{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      font-size:12px
+    }
     details{margin-top:6px}
     details summary{cursor:pointer;color:var(--accent)}
     .small{font-size:12px;color:var(--muted)}
     .err{color:#ff8f8f}
     .ok{color:#a8ffb0}
-        footer{
+    .tag{
+      display:inline-block;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      font-size:12px;
+      margin:2px 6px 2px 0;
+      color:var(--text);
+      background:rgba(0,0,0,.20);
+    }
+    .label-invariant{border-color:rgba(168,255,176,.35); background:rgba(168,255,176,.10);}
+    .label-specific{border-color:rgba(122,162,255,.45); background:rgba(122,162,255,.12);}
+    .label-inconsistent{border-color:rgba(255,143,143,.45); background:rgba(255,143,143,.10);}
+
+    footer{
       margin-top:32px;
       padding:18px 20px;
       border-top:1px solid var(--border);
@@ -49,30 +107,25 @@
       font-size:13px;
       text-align:center;
     }
-    footer strong{
-      color:var(--text);
-      font-weight:600;
-    }
-    footer a{
-      color:var(--accent);
-      text-decoration:none;
-    }
-    footer a:hover{
-      text-decoration:underline;
-    }
-    .affiliation{
-      margin-top:6px;
-      font-size:12px;
-      opacity:0.9;
-    }
+    footer strong{color:var(--text);font-weight:600;}
+    footer a{color:var(--accent);text-decoration:none;}
+    footer a:hover{text-decoration:underline;}
+    .affiliation{margin-top:6px;font-size:12px;opacity:0.9;}
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <h1>Task-level Anomaly Explorer</h1>
-    <p>Interactive viewer for per-task anomaly scores + small-LLM explanations (static, GitHub Pages-friendly).</p>
+    <p>
+      Interactive viewer for per-task anomaly scores + SML outputs (static, GitHub Pages-friendly).
+      <span class="small">Per-task viewer loads <span class="mono">outputs/&lt;task&gt;_anomaly_scores.csv</span> and optional
+      <span class="mono">outputs/&lt;task&gt;_anomaly_explanations.csv</span>.</span>
+    </p>
 
     <div class="grid">
+
+      <!-- Controls -->
       <div class="card">
         <div class="row">
           <div>
@@ -108,12 +161,13 @@
         </div>
 
         <div class="row" style="margin-top:10px">
-          <span class="pill" id="filesBadge">files: —</span>
+          <span class="pill" id="filesBadge">rows: —</span>
           <span class="pill" id="rangeBadge">score01: —</span>
           <span class="status" id="status">Ready.</span>
         </div>
       </div>
 
+      <!-- Per-task table -->
       <div class="card">
         <div class="small">
           Expects these files (relative paths):
@@ -139,27 +193,100 @@
           Tip: click on table headers to sort. Explanations are shown if present in explanations CSV.
         </div>
       </div>
+
+      <!-- NEW: Cross-task consistency auditor -->
+      <div class="card">
+        <div class="row">
+          <div style="min-width:260px">
+            <div style="font-size:15px; font-weight:600;">Cross-task Consistency (SML Auditor)</div>
+            <div class="small">
+              Loads <span class="mono">outputs/consistency_labels.csv</span> (generated by <span class="mono">python explain_anomalies.py audit ...</span>)
+            </div>
+          </div>
+
+          <div>
+            <label for="cq">Search subject</label><br/>
+            <input id="cq" placeholder="e.g., 207" />
+          </div>
+
+          <div>
+            <label for="climit">Show</label><br/>
+            <select id="climit">
+              <option selected>20</option>
+              <option>50</option>
+              <option>100</option>
+              <option>500</option>
+            </select>
+          </div>
+
+          <div style="margin-left:auto" class="row">
+            <button id="creload">Reload Consistency</button>
+            <a class="btn" id="cdownload" href="#" download>Download labels (CSV)</a>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <span class="pill" id="cfilesBadge">rows: —</span>
+          <span class="status" id="cstatus">Ready.</span>
+        </div>
+
+        <table id="ctbl">
+          <thead>
+            <tr>
+              <th data-ck="subject_id">Subject</th>
+              <th data-ck="label">Label</th>
+              <th data-ck="confidence">Confidence</th>
+              <th data-ck="dominant_families">Dominant families</th>
+              <th data-ck="supporting_tasks">Supporting tasks</th>
+              <th data-ck="action">Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="small" style="margin-top:10px">
+          Tip: Click <span class="mono">Focus</span> to automatically filter the per-task table by this subject id.
+        </div>
+      </div>
+
     </div>
   </div>
+
   <footer>
     <div>
       Created by <strong>Dr. Georgios Bouchouras</strong> ·
-      <a href="mailto:gbouchouras@mitropolitiko.edu.gr">
-        gbouchouras@mitropolitiko.edu.gr
-      </a>
+      <a href="mailto:gbouchouras@mitropolitiko.edu.gr">gbouchouras@mitropolitiko.edu.gr</a>
     </div>
     <div class="affiliation">
       Center of Interdisciplinary Education and Research in Rehabilitation<br/>
       Metropolitan College, Thessaloniki
     </div>
   </footer>
+
 <script>
   const el = (id)=>document.getElementById(id);
+
+  function splitCSVLine(line){
+    // handles quoted commas
+    const out = [];
+    let cur = "", inQ = false;
+    for(let i=0;i<line.length;i++){
+      const c = line[i];
+      if(c === '"'){
+        if(inQ && line[i+1] === '"'){ cur += '"'; i++; }
+        else inQ = !inQ;
+      } else if(c === ',' && !inQ){
+        out.push(cur); cur="";
+      } else cur += c;
+    }
+    out.push(cur);
+    return out;
+  }
 
   function parseCSV(text){
     // simple CSV parser for typical comma-separated, no multiline fields
     const lines = text.trim().split(/\r?\n/);
-    const header = splitCSVLine(lines[0]);
+    const header = splitCSVLine(lines[0]).map(h=>h.trim());
     const rows = [];
     for(let i=1;i<lines.length;i++){
       if(!lines[i].trim()) continue;
@@ -169,23 +296,6 @@
       rows.push(obj);
     }
     return rows;
-  }
-
-  function splitCSVLine(line){
-    // handles quoted commas
-    const out = [];
-    let cur = "", inQ = false;
-    for(let i=0;i<line.length;i++){
-      const c = line[i];
-      if(c === '"' ){
-        if(inQ && line[i+1] === '"'){ cur += '"'; i++; }
-        else inQ = !inQ;
-      } else if(c === ',' && !inQ){
-        out.push(cur); cur="";
-      } else cur += c;
-    }
-    out.push(cur);
-    return out;
   }
 
   async function fetchText(path){
@@ -198,6 +308,39 @@
     const n = Number(x);
     return Number.isFinite(n) ? n : null;
   }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  }
+
+  function renderExplanation(text){
+    if(!text) return `<span class="small err">No explanation</span>`;
+    const safe = escapeHtml(text);
+    if(safe.length <= 160) return `<span>${safe}</span>`;
+    return `
+      <details>
+        <summary>Show</summary>
+        <div class="small">${safe}</div>
+      </details>
+    `;
+  }
+
+  function toCSV(rows, cols){
+    const esc = (v)=>{
+      const s = String(v ?? "");
+      if(/[",\n]/.test(s)) return `"${s.replace(/"/g,'""')}"`;
+      return s;
+    };
+    let out = cols.join(",") + "\n";
+    for(const r of rows){
+      out += cols.map(c=>esc(r[c])).join(",") + "\n";
+    }
+    return out;
+  }
+
+  // =========================
+  // Per-task state + logic
+  // =========================
 
   function normalizeRows(scoreRows, explRows){
     // Build map by path for explanations
@@ -224,7 +367,10 @@
     });
 
     // rank by mahalanobis_sq desc (fallback score01 desc)
-    rows.sort((a,b)=> (b.mahalanobis_sq ?? -1) - (a.mahalanobis_sq ?? -1) || (b.score01 ?? -1) - (a.score01 ?? -1));
+    rows.sort((a,b)=>
+      (b.mahalanobis_sq ?? -1) - (a.mahalanobis_sq ?? -1) ||
+      (b.score01 ?? -1) - (a.score01 ?? -1)
+    );
     rows.forEach((r,i)=> r.rank = i+1);
     return rows;
   }
@@ -251,7 +397,6 @@
     const asc = STATE.sortAsc;
     rows.sort((a,b)=>{
       const av=a[k], bv=b[k];
-      // numeric if possible
       const an = (typeof av==="number") ? av : toNum(av);
       const bn = (typeof bv==="number") ? bv : toNum(bv);
       let cmp = 0;
@@ -267,7 +412,7 @@
         <td>${r.rank}</td>
         <td>${r.score01 ?? ""}</td>
         <td>${r.mahalanobis_sq ?? ""}</td>
-        <td>${r.subject_id ?? ""}</td>
+        <td>${escapeHtml(r.subject_id ?? "")}</td>
         <td class="mono">${escapeHtml(r.path ?? "")}</td>
         <td>${renderExplanation(r.explanation)}</td>
       `;
@@ -285,42 +430,13 @@
     }
 
     // download current view as CSV
-    const csv = toCSV(shown);
+    const cols = ["rank","score01","mahalanobis_sq","subject_id","path","explanation"];
+    const csv = toCSV(shown, cols);
     const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
     const url = URL.createObjectURL(blob);
     const a = el("download");
     a.href = url;
     a.download = `${el("task").value}_top${topn}_anomalies.csv`;
-  }
-
-  function toCSV(rows){
-    const cols = ["rank","score01","mahalanobis_sq","subject_id","path","explanation"];
-    const esc = (v)=>{
-      const s = String(v ?? "");
-      if(/[",\n]/.test(s)) return `"${s.replace(/"/g,'""')}"`;
-      return s;
-    };
-    let out = cols.join(",") + "\n";
-    for(const r of rows){
-      out += cols.map(c=>esc(r[c])).join(",") + "\n";
-    }
-    return out;
-  }
-
-  function renderExplanation(text){
-    if(!text) return `<span class="small err">No explanation</span>`;
-    const safe = escapeHtml(text);
-    if(safe.length <= 160) return `<span>${safe}</span>`;
-    return `
-      <details>
-        <summary>Show</summary>
-        <div class="small">${safe}</div>
-      </details>
-    `;
-  }
-
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
   }
 
   async function load(){
@@ -339,7 +455,7 @@
       const explRows  = explTxt ? parseCSV(explTxt) : [];
 
       STATE.rows = normalizeRows(scoreRows, explRows);
-      el("status").innerHTML = `<span class="small ok">Loaded ${STATE.rows.length} rows for task=${task}.</span>`;
+      el("status").innerHTML = `<span class="small ok">Loaded ${STATE.rows.length} rows for task=${escapeHtml(task)}.</span>`;
       render();
     }catch(e){
       el("status").innerHTML = `<span class="small err">${escapeHtml(e.message)}</span>`;
@@ -363,7 +479,145 @@
   el("topn").addEventListener("change", render);
   el("q").addEventListener("input", render);
 
+  // =========================
+  // NEW: Consistency state + logic
+  // =========================
+
+  let CSTATE = {rows:[], sortKey:"subject_id", sortAsc:true};
+
+  function tryParseJsonArray(s){
+    if(!s) return [];
+    const t = String(s).trim();
+    try{
+      const arr = JSON.parse(t);
+      return Array.isArray(arr) ? arr : [];
+    }catch(_){
+      // fallback: treat as semi/pipe separated
+      if(t.includes("|")) return t.split("|").map(x=>x.trim()).filter(Boolean);
+      if(t.includes(";")) return t.split(";").map(x=>x.trim()).filter(Boolean);
+      if(t.includes(",")) return t.split(",").map(x=>x.trim()).filter(Boolean);
+      return [t];
+    }
+  }
+
+  function labelTag(label){
+    const l = String(label || "").toLowerCase();
+    let cls = "tag";
+    if(l === "task_invariant") cls += " label-invariant";
+    else if(l === "task_specific") cls += " label-specific";
+    else if(l === "inconsistent") cls += " label-inconsistent";
+    return `<span class="${cls}">${escapeHtml(label || "")}</span>`;
+  }
+
+  function renderC(){
+    const tbody = el("ctbl").querySelector("tbody");
+    tbody.innerHTML = "";
+
+    const q = el("cq").value.trim().toLowerCase();
+    const limit = Number(el("climit").value);
+
+    let rows = CSTATE.rows.slice(0);
+    if(q){
+      rows = rows.filter(r => String(r.subject_id).toLowerCase().includes(q));
+    }
+
+    // sort
+    const k = CSTATE.sortKey;
+    const asc = CSTATE.sortAsc;
+    rows.sort((a,b)=>{
+      const av=a[k], bv=b[k];
+      const an = toNum(av), bn = toNum(bv);
+      let cmp = 0;
+      if(an!==null && bn!==null) cmp = an - bn;
+      else cmp = String(av??"").localeCompare(String(bv??""));
+      return asc ? cmp : -cmp;
+    });
+
+    const shown = rows.slice(0, limit);
+    shown.forEach(r=>{
+      const fams = tryParseJsonArray(r.dominant_families);
+      const tasks = tryParseJsonArray(r.supporting_tasks);
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(r.subject_id ?? "")}</td>
+        <td>${labelTag(r.label)}</td>
+        <td>${escapeHtml(r.confidence ?? "")}</td>
+        <td>${fams.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join("") || `<span class="small err">—</span>`}</td>
+        <td>${tasks.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join("") || `<span class="small err">—</span>`}</td>
+        <td><button class="focusBtn" data-subj="${escapeHtml(r.subject_id ?? "")}">Focus</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    el("cfilesBadge").textContent = `rows: ${CSTATE.rows.length} | showing: ${shown.length}`;
+
+    // download
+    const cols = ["subject_id","label","confidence","dominant_families","supporting_tasks","error"];
+    const csv = toCSV(shown, cols);
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = el("cdownload");
+    a.href = url;
+    a.download = `consistency_labels_top${limit}.csv`;
+
+    // bind focus buttons
+    document.querySelectorAll(".focusBtn").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const sid = btn.getAttribute("data-subj") || "";
+        // set search box in main table to this subject id
+        el("q").value = sid;
+        render();
+        // scroll up a bit for convenience
+        window.scrollTo({top: 0, behavior: "smooth"});
+      });
+    });
+  }
+
+  async function loadConsistency(){
+    const path = "outputs/consistency_labels.csv";
+    el("cstatus").innerHTML = `<span class="small">Loading…</span>`;
+    try{
+      const txt = await fetchText(path);
+      const rows = parseCSV(txt);
+
+      // normalize column names (tolerant)
+      CSTATE.rows = rows.map(r=>({
+        subject_id: r.subject_id ?? r.subject ?? r.subj ?? "",
+        label: r.label ?? "",
+        confidence: r.confidence ?? "",
+        dominant_families: r.dominant_families ?? r.families ?? "",
+        supporting_tasks: r.supporting_tasks ?? r.tasks ?? "",
+        error: r.error ?? ""
+      }));
+
+      el("cstatus").innerHTML = `<span class="small ok">Loaded ${CSTATE.rows.length} subjects.</span>`;
+      renderC();
+    }catch(e){
+      el("cstatus").innerHTML = `<span class="small err">${escapeHtml(e.message)}</span>`;
+      CSTATE.rows = [];
+      renderC();
+    }
+  }
+
+  // sorting for consistency table
+  document.querySelectorAll("th[data-ck]").forEach(th=>{
+    th.addEventListener("click", ()=>{
+      const k = th.getAttribute("data-ck");
+      if(CSTATE.sortKey === k) CSTATE.sortAsc = !CSTATE.sortAsc;
+      else { CSTATE.sortKey = k; CSTATE.sortAsc = true; }
+      renderC();
+    });
+  });
+
+  el("creload").addEventListener("click", loadConsistency);
+  el("cq").addEventListener("input", renderC);
+  el("climit").addEventListener("change", renderC);
+
+  // Initial loads
   load();
+  loadConsistency();
 </script>
+
 </body>
 </html>
