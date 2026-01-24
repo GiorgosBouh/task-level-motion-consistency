@@ -1,0 +1,3 @@
+subject_id,label,confidence,supporting_tasks,dominant_families,error
+202,task_invariant,0.95,"[""stand"", ""walk""]","[""jerk:0.820, accel:0.210"", ""jerk:0.790, accel:0.240""]",
+203,task_invariant,0.95,"[""stand"", ""walk""]","[""accel:0.770, jerk:0.180"", ""accel:0.740, jerk:0.220""]",

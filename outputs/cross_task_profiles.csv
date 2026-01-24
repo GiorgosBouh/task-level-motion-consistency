@@ -1,0 +1,9 @@
+subject_id,task,family,score
+202,stand,jerk,0.82
+202,stand,accel,0.21
+202,walk,jerk,0.79
+202,walk,accel,0.24
+203,stand,jerk,0.18
+203,stand,accel,0.77
+203,walk,jerk,0.22
+203,walk,accel,0.74
