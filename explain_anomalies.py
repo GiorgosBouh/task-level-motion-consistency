@@ -259,10 +259,9 @@ def run_consistency_audit(
     profiles_csv long format: subject_id,task,family,score
     Writes out_csv with labels + evidence.
 
-    This is the "task consistency editor" role:
-    - uses ONLY aggregated profiles
-    - does NOT modify anomaly scores
-    - outputs structured labels for cross-task behavior
+    NEW behavior:
+    - Emits ALL subjects found in profiles_csv
+    - If a subject has <2 distinct tasks -> label=insufficient_tasks (no LLM call)
     """
     by_subj_task: Dict[str, Dict[str, List[Tuple[str, float]]]] = {}
     with open(profiles_csv, "r", encoding="utf-8") as f:
@@ -279,8 +278,30 @@ def run_consistency_audit(
             by_subj_task.setdefault(sid, {}).setdefault(task, []).append((fam, score))
 
     rows_out: List[Dict[str, Any]] = []
-    for sid, task_map in by_subj_task.items():
+
+    # iterate deterministically (sorted subject ids)
+    for sid in sorted(by_subj_task.keys(), key=lambda x: (len(x), x)):
+        task_map = by_subj_task[sid]
         task_profiles = {t: sorted(v, key=lambda x: x[1], reverse=True) for t, v in task_map.items()}
+
+        task_count = len(task_profiles)
+
+        # ✅ NEW: do not skip; emit insufficient_tasks
+        if task_count < 2:
+            rows_out.append(
+                {
+                    "subject_id": sid,
+                    "tasks_available": task_count,
+                    "label": "insufficient_tasks",
+                    "confidence": "",
+                    "supporting_tasks": json.dumps(sorted(list(task_profiles.keys())), ensure_ascii=False),
+                    "dominant_families": "[]",
+                    "note": "Needs >=2 tasks for cross-task consistency auditing",
+                    "error": "",
+                }
+            )
+            continue
+
         prompt = make_consistency_prompt(sid, task_profiles, topk=topk)
 
         try:
@@ -299,10 +320,12 @@ def run_consistency_audit(
             rows_out.append(
                 {
                     "subject_id": sid,
+                    "tasks_available": task_count,
                     "label": label,
                     "confidence": obj.get("confidence", ""),
                     "supporting_tasks": json.dumps(obj.get("supporting_tasks", []), ensure_ascii=False),
                     "dominant_families": json.dumps(obj.get("dominant_families", []), ensure_ascii=False),
+                    "note": "",
                     "error": "",
                 }
             )
@@ -311,15 +334,27 @@ def run_consistency_audit(
             rows_out.append(
                 {
                     "subject_id": sid,
+                    "tasks_available": task_count,
                     "label": "ERROR",
                     "confidence": "",
-                    "supporting_tasks": "[]",
+                    "supporting_tasks": json.dumps(sorted(list(task_profiles.keys())), ensure_ascii=False),
                     "dominant_families": "[]",
+                    "note": "LLM audit failed; see error",
                     "error": str(e),
                 }
             )
 
-    fieldnames = ["subject_id", "label", "confidence", "supporting_tasks", "dominant_families", "error"]
+    # ✅ NEW: include tasks_available + note
+    fieldnames = [
+        "subject_id",
+        "tasks_available",
+        "label",
+        "confidence",
+        "supporting_tasks",
+        "dominant_families",
+        "note",
+        "error",
+    ]
     with open(out_csv, "w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fieldnames)
         w.writeheader()
