@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -52,6 +53,7 @@
       display:inline-block
     }
     button:hover,a.btn:hover{background:rgba(122,162,255,.22)}
+    button:disabled{opacity:.45;cursor:not-allowed}
     .pill{
       display:inline-block;
       padding:4px 8px;
@@ -98,18 +100,19 @@
     .label-specific{border-color:rgba(122,162,255,.45); background:rgba(122,162,255,.12);}
     .label-inconsistent{border-color:rgba(255,143,143,.45); background:rgba(255,143,143,.10);}
     .label-insufficient{border-color:rgba(255,255,255,.22); background:rgba(255,255,255,.06);}
-footer{
-  margin-top:32px;
-  padding:18px 20px;
-  border-top:1px solid var(--border);
-  color:var(--muted);
-  font-size:13px;
-  text-align:center;
-}
-footer strong{color:var(--text);font-weight:600;}
-footer a{color:var(--accent);text-decoration:none;}
-footer a:hover{text-decoration:underline;}
-.affiliation{margin-top:6px;font-size:12px;opacity:0.9;}
+
+    footer{
+      margin-top:32px;
+      padding:18px 20px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+    }
+    footer strong{color:var(--text);font-weight:600;}
+    footer a{color:var(--accent);text-decoration:none;}
+    footer a:hover{text-decoration:underline;}
+    .affiliation{margin-top:6px;font-size:12px;opacity:0.9;}
   </style>
 </head>
 
@@ -121,137 +124,150 @@ footer a:hover{text-decoration:underline;}
       <span class="small">Per-task viewer loads <span class="mono">outputs/&lt;task&gt;_anomaly_scores.csv</span> and optional
       <span class="mono">outputs/&lt;task&gt;_anomaly_explanations.csv</span>.</span>
     </p>
-<div class="grid">
 
-  <!-- Controls -->
-  <div class="card">
-    <div class="row">
-      <div>
-        <label for="task">Task</label><br/>
-        <select id="task">
-          <option value="stand">stand</option>
-          <option value="chair">chair</option>
-          <option value="wheelchair">wheelchair</option>
-          <option value="sit">sit</option>
-          <option value="stand-frame">stand-frame</option>
-        </select>
-      </div>
+    <div class="grid">
 
-      <div>
-        <label for="topn">Top N</label><br/>
-        <select id="topn">
-          <option>10</option>
-          <option selected>20</option>
-          <option>50</option>
-          <option>100</option>
-        </select>
-      </div>
+      <!-- Controls -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <label for="task">Task</label><br/>
+            <select id="task">
+              <option value="stand">stand</option>
+              <option value="chair">chair</option>
+              <option value="wheelchair">wheelchair</option>
+              <option value="sit">sit</option>
+              <option value="stand-frame">stand-frame</option>
+            </select>
+          </div>
 
-      <div>
-        <label for="q">Search (subject id / path)</label><br/>
-        <input id="q" placeholder="e.g., 207 or 202_18_3" />
-      </div>
+          <div>
+            <label for="topn">Top N</label><br/>
+            <select id="topn">
+              <option>10</option>
+              <option selected>20</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
 
-      <div style="margin-left:auto" class="row">
-        <button id="reload">Reload</button>
-        <a class="btn" id="download" href="#" download>Download table (CSV)</a>
-      </div>
-    </div>
+          <div>
+            <label for="q">Search (subject id / path)</label><br/>
+            <input id="q" placeholder="e.g., 207 or 202_18_3" />
+          </div>
 
-    <div class="row" style="margin-top:10px">
-      <span class="pill" id="filesBadge">rows: —</span>
-      <span class="pill" id="rangeBadge">score01: —</span>
-      <span class="status" id="status">Ready.</span>
-    </div>
-  </div>
+          <div style="margin-left:auto" class="row">
+            <button id="reload">Reload</button>
+            <a class="btn" id="download" href="#" download>Download table (CSV)</a>
+          </div>
+        </div>
 
-  <!-- Per-task table -->
-  <div class="card">
-    <div class="small">
-      Expects these files (relative paths):
-      <div class="mono">outputs/&lt;task&gt;_anomaly_scores.csv</div>
-      <div class="mono">outputs/&lt;task&gt;_anomaly_explanations.csv</div>
-    </div>
-
-    <table id="tbl">
-      <thead>
-        <tr>
-          <th data-k="rank">Rank</th>
-          <th data-k="score01">Score01</th>
-          <th data-k="mahalanobis_sq">Mahalanobis²</th>
-          <th data-k="subject_id">Subject</th>
-          <th data-k="path">Path</th>
-          <th data-k="explanation">Explanation</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <div class="small" style="margin-top:10px">
-      Tip: click on table headers to sort. Explanations are shown if present in explanations CSV.
-    </div>
-  </div>
-
-  <!-- Cross-task consistency auditor -->
-  <div class="card">
-    <div class="row">
-      <div style="min-width:260px">
-        <div style="font-size:15px; font-weight:600;">Cross-task Consistency (SML Auditor)</div>
-        <div class="small">
-          Loads <span class="mono">outputs/consistency_labels.csv</span> (generated by <span class="mono">python explain_anomalies.py audit ...</span>)
+        <div class="row" style="margin-top:10px">
+          <span class="pill" id="filesBadge">rows: —</span>
+          <span class="pill" id="rangeBadge">score01: —</span>
+          <span class="status" id="status">Ready.</span>
         </div>
       </div>
 
-      <div>
-        <label for="cq">Search subject</label><br/>
-        <input id="cq" placeholder="e.g., 207" />
+      <!-- Per-task table -->
+      <div class="card">
+        <div class="small">
+          Expects these files (relative paths):
+          <div class="mono">outputs/&lt;task&gt;_anomaly_scores.csv</div>
+          <div class="mono">outputs/&lt;task&gt;_anomaly_explanations.csv</div>
+        </div>
+
+        <table id="tbl">
+          <thead>
+            <tr>
+              <th data-k="rank">Rank</th>
+              <th data-k="score01">Score01</th>
+              <th data-k="mahalanobis_sq">Mahalanobis²</th>
+              <th data-k="subject_id">Subject</th>
+              <th data-k="path">Path</th>
+              <th data-k="explanation">Explanation</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="small" style="margin-top:10px">
+          Tip: click on table headers to sort. Explanations are shown if present in explanations CSV.
+        </div>
       </div>
 
-      <div>
-        <label for="climit">Show</label><br/>
-        <select id="climit">
-          <option selected>20</option>
-          <option>50</option>
-          <option>100</option>
-          <option>500</option>
-        </select>
+      <!-- Cross-task consistency auditor -->
+      <div class="card">
+        <div class="row">
+          <div style="min-width:260px">
+            <div style="font-size:15px; font-weight:600;">Cross-task Consistency (SML Auditor)</div>
+            <div class="small">
+              Loads <span class="mono">outputs/consistency_labels.csv</span> (generated by <span class="mono">python explain_anomalies.py audit ...</span>)
+            </div>
+          </div>
+
+          <div>
+            <label for="cq">Search subject</label><br/>
+            <input id="cq" placeholder="e.g., 207" />
+          </div>
+
+          <div>
+            <label for="climit">Show</label><br/>
+            <select id="climit">
+              <option selected>20</option>
+              <option>50</option>
+              <option>100</option>
+              <option>500</option>
+            </select>
+          </div>
+
+          <div style="margin-left:auto" class="row">
+            <button id="creload">Reload Consistency</button>
+            <a class="btn" id="cdownload" href="#" download>Download labels (CSV)</a>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <span class="pill" id="cfilesBadge">rows: —</span>
+          <span class="status" id="cstatus">Ready.</span>
+        </div>
+
+        <table id="ctbl">
+          <thead>
+            <tr>
+              <th data-ck="subject_id">Subject</th>
+              <th data-ck="label">Label</th>
+              <th data-ck="tasks_available">Tasks</th>
+              <th data-ck="confidence">Confidence</th>
+              <th data-ck="dominant_families">Dominant families</th>
+              <th data-ck="supporting_tasks">Supporting tasks</th>
+              <th data-ck="note">Note</th>
+              <th data-ck="action">Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="small" style="margin-top:10px">
+          Tip: Click <span class="mono">Focus</span> to automatically filter the per-task table by this subject id.
+          <span class="small">Subjects with <span class="mono">insufficient_tasks</span> are shown but cannot be audited cross-task.</span>
+        </div>
       </div>
 
-      <div style="margin-left:auto" class="row">
-        <button id="creload">Reload Consistency</button>
-        <a class="btn" id="cdownload" href="#" download>Download labels (CSV)</a>
-      </div>
-    </div>
-
-    <div class="row" style="margin-top:10px">
-      <span class="pill" id="cfilesBadge">rows: —</span>
-      <span class="status" id="cstatus">Ready.</span>
-    </div>
-
-    <table id="ctbl">
-      <thead>
-        <tr>
-          <th data-ck="subject_id">Subject</th>
-          <th data-ck="label">Label</th>
-          <th data-ck="tasks_available">Tasks</th>
-          <th data-ck="confidence">Confidence</th>
-          <th data-ck="dominant_families">Dominant families</th>
-          <th data-ck="supporting_tasks">Supporting tasks</th>
-          <th data-ck="note">Note</th>
-          <th data-ck="action">Action</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <div class="small" style="margin-top:10px">
-      Tip: Click <span class="mono">Focus</span> to automatically filter the per-task table by this subject id.
-      <span class="small">Subjects with <span class="mono">insufficient_tasks</span> are shown but cannot be audited cross-task.</span>
     </div>
   </div>
 
-</div>
-  </div>
+  <footer>
+    <div>
+      Created by <strong>Dr. Georgios Bouchouras</strong> ·
+      <a href="mailto:gbouchouras@mitropolitiko.edu.gr">gbouchouras@mitropolitiko.edu.gr</a>
+    </div>
+    <div class="affiliation">
+      Center of Interdisciplinary Education and Research in Rehabilitation<br/>
+      Metropolitan College, Thessaloniki
+    </div>
+  </footer>
+
 <script>
   const el = (id)=>document.getElementById(id);
 
@@ -259,7 +275,8 @@ footer a:hover{text-decoration:underline;}
     return String(s).replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
   }
 
-  // Robust CSV parser: handles quoted commas + escaped quotes, supports normal single-line rows
+  // Robust CSV parser: handles quoted commas + escaped quotes, supports normal single-line rows.
+  // FIXED: safely flush final row even if trailing field is empty and/or file lacks newline.
   function parseCSVRobust(text){
     const rows = [];
     let row = [];
@@ -285,14 +302,18 @@ footer a:hover{text-decoration:underline;}
         } else cur += ch;
       }
     }
-    if(cur.length > 0 || row.length > 0){
-      row.push(cur); rows.push(row);
+
+    // flush last row (even if last field is empty) if there is any content
+    const hasAny = (cur.length > 0) || row.some(cell => String(cell||"").length > 0);
+    if(hasAny){
+      row.push(cur);
+      rows.push(row);
     }
     return rows;
   }
 
   function parseCSV(text){
-    const rows = parseCSVRobust(text).filter(r => r.length && r.join("").trim().length);
+    const rows = parseCSVRobust(String(text || "")).filter(r => r && r.length && r.join("").trim().length);
     if(!rows.length) return [];
     const header = rows[0].map(h=>String(h||"").trim());
     const out = [];
@@ -548,16 +569,14 @@ footer a:hover{text-decoration:underline;}
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${escapeHtml(r.subject_id ?? "")}</td>
-        <td>
-          ${labelTag(r.label)}
-        </td>
+        <td>${labelTag(r.label)}</td>
         <td>${escapeHtml(tasksAvail)}</td>
         <td>${escapeHtml(r.confidence ?? "")}</td>
         <td>${fams.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join("") || `<span class="small err">—</span>`}</td>
         <td>${tasks.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join("") || `<span class="small err">—</span>`}</td>
-        <td>${isInsufficient ? `<span class="small">${escapeHtml(r.note || "")}</span>` : `<span class="small">—</span>`}</td>
+        <td>${(r.note && String(r.note).trim()) ? `<span class="small">${escapeHtml(r.note)}</span>` : `<span class="small">—</span>`}</td>
         <td>
-          <button class="focusBtn" data-subj="${escapeHtml(r.subject_id ?? "")}" ${isInsufficient ? "disabled" : ""} style="${isInsufficient ? "opacity:0.45;cursor:not-allowed;" : ""}">
+          <button class="focusBtn" data-subj="${escapeHtml(r.subject_id ?? "")}" ${isInsufficient ? "disabled" : ""}>
             Focus
           </button>
         </td>
@@ -567,7 +586,6 @@ footer a:hover{text-decoration:underline;}
 
     el("cfilesBadge").textContent = `rows: ${CSTATE.rows.length} | showing: ${shown.length}`;
 
-    // download: include new columns if present
     const colsNew = ["subject_id","tasks_available","label","confidence","supporting_tasks","dominant_families","note","error"];
     const colsOld = ["subject_id","label","confidence","supporting_tasks","dominant_families","error"];
     const cols = CSTATE.hasNewSchema ? colsNew : colsOld;
@@ -579,7 +597,6 @@ footer a:hover{text-decoration:underline;}
     a.href = url;
     a.download = `consistency_labels_top${limit}.csv`;
 
-    // bind focus buttons
     document.querySelectorAll(".focusBtn").forEach(btn=>{
       btn.addEventListener("click", ()=>{
         if(btn.disabled) return;
@@ -598,10 +615,8 @@ footer a:hover{text-decoration:underline;}
       const txt = await fetchText(path);
       const rows = parseCSV(txt);
 
-      // schema detection
       CSTATE.hasNewSchema = rows.length ? Object.prototype.hasOwnProperty.call(rows[0], "tasks_available") : false;
 
-      // normalize tolerant mapping (supports both schemas)
       CSTATE.rows = rows.map(r=>({
         subject_id: r.subject_id ?? r.subject ?? r.subj ?? "",
         tasks_available: r.tasks_available ?? "",
@@ -635,7 +650,9 @@ footer a:hover{text-decoration:underline;}
   el("cq").addEventListener("input", renderC);
   el("climit").addEventListener("change", renderC);
 
-  // Initial loads
   load();
   loadConsistency();
 </script>
+
+</body>
+</html>
