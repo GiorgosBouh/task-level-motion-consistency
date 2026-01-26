@@ -223,7 +223,7 @@
             <input id="cq" placeholder="e.g., 207" />
           </div>
 
-          <!-- NEW: Label filter -->
+          <!-- Label filter -->
           <div>
             <label for="clabel">Filter label</label><br/>
             <select id="clabel">
@@ -309,7 +309,7 @@
     return String(s).replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
   }
 
-  // Robust CSV parser: handles quoted commas + escaped quotes, supports normal single-line rows
+  // ROBUST CSV PARSER (handles quoted commas + escaped quotes, single-line rows)
   function parseCSVRobust(text){
     const rows = [];
     let row = [];
@@ -335,14 +335,16 @@
         } else cur += ch;
       }
     }
-    if(cur.length > 0 || row.length > 0){
-      row.push(cur); rows.push(row);
-    }
-    return rows;
+    // push last row even if empty last line
+    row.push(cur);
+    rows.push(row);
+
+    // trim trailing empty rows
+    return rows.filter(r => r.some(x => String(x||"").trim().length));
   }
 
   function parseCSV(text){
-    const rows = parseCSVRobust(text).filter(r => r.length && r.join("").trim().length);
+    const rows = parseCSVRobust(text);
     if(!rows.length) return [];
     const header = rows[0].map(h=>String(h||"").trim());
     const out = [];
@@ -565,9 +567,9 @@
   }
 
   function passesLabelFilter(r){
-    const want = el("clabel").value || "all";
+    const want = (el("clabel")?.value || "all").toLowerCase();
     if(want === "all") return true;
-    return String(r.label || "").toLowerCase() === want.toLowerCase();
+    return String(r.label || "").toLowerCase() === want;
   }
 
   function renderC(){
@@ -584,7 +586,7 @@
       rows = rows.filter(r => String(r.subject_id).toLowerCase().includes(q));
     }
 
-    // NEW: label filter
+    // label filter
     rows = rows.filter(passesLabelFilter);
 
     // sort
@@ -627,7 +629,7 @@
 
     el("cfilesBadge").textContent = `rows: ${CSTATE.rows.length} | filtered: ${rows.length} | showing: ${shown.length}`;
 
-    // download (download what is currently shown)
+    // download current view
     const colsNew = ["subject_id","tasks_available","label","confidence","supporting_tasks","dominant_families","note","error"];
     const colsOld = ["subject_id","label","confidence","supporting_tasks","dominant_families","error"];
     const cols = CSTATE.hasNewSchema ? colsNew : colsOld;
