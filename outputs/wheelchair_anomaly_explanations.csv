@@ -1,0 +1,109 @@
+rank,path,subject_id,label,explanation
+1,data/201_18_2_8_2_wheelchair.txt,201,wheelchair,"1) The anomalous trial suggests a deviation in the subject's movement pattern characterized by unusual acceleration and jerk metrics alongside variability in path length and speed during wheelchair navigation tasks.
+2) Likely causes: sensor artifact; segmentation/cropping error; file corruption or format issue.
+3) Concrete checks to validate: plot accelerometer, gyroscope signals against time for visual inspection of anomalies; verify the integrity and extension duration of 'data/201_18_2_8_2_wheelchair.txt' file using a checksum tool or similar validation method."
+2,data/201_18_2_10_2_wheelchair.txt,201,wheelchair,"1) The anomalous trial likely indicates an irregularity in the subject's movement patterns or a potential issue with data acquisition/processing for Subject 201 during this wheelchair task session.
+
+2) Possible causes:
+   - Sensor artifact due to noise or interference affecting measurement accuracy.
+   - Wrong label assignment leading to misinterpretation of the trial's nature.
+   - File corruption/format issue resulting in data distortion during storage or transfer.
+
+3) Concrete checks:
+   - Plot signals for visual inspection and anomaly detection within movement patterns.
+   - Verify filename label accuracy to confirm correct session identification."
+3,data/201_18_3_3_2_wheelchair.txt,201,wheelchair,"1) The anomalous trial suggests a significant deviation in the subject's movement pattern during wheelchair use as indicated by high z-scores across multiple motion features (acceleration mean and standard deviation, speed mean and variance, path length).
+2) Likely causes: sensor artifact; segmentation/cropping error.
+3) Concrete checks to validate: plot acceleration signals against time for visual inspection of anomalies or irregular patterns; verify the integrity of file format using a checksum tool like MD5SUM on 'data/201_18_3_3_2_wheelchair.txt'."
+4,data/201_18_2_29_2_wheelchair.txt,201,wheelchair,"1) The anomalous trial suggests a deviation in the wheelchair's motion characteristics that may indicate an irregular movement pattern or potential data quality issue during Subject 201's task execution on file 'data/201_18_2_29_2_wheelchair.txt'.
+
+2) Likely causes:
+   - Sensor artifact due to noise in the measurement system.
+   - Wrong label assignment for this particular trial data segment.
+   - Subject-specific movement strategy that deviates from typical wheelchair usage patterns, potentially unique or erratic movements of Subject 201.
+
+3) Concrete checks:
+   - Plot speed and acceleration signals to visually inspect the anomaly's appearance in time series data.
+   - Verify if there are any missing values within this trial that could indicate a sensor malfunction at specific timestamps."
+5,data/217_18_4_1_1_wheelchair.txt,217,wheelchair,"1) The anomalous trial likely indicates an irregularity in the subject's wheelchair movement that deviates significantly from expected motion patterns based on standardized z-scores for path length variability and speed metrics.
+2) Possible causes: sensor artifact; segmentation/cropping error during data preprocessing; incorrect label assignment to this trial within the dataset.
+3) Concrete checks: Plot time series of acceleration, jerk signals against expected patterns (artifacts may show as spikes or irregular fluctuations); verify that file labels match corresponding trials in metadata documentation for consistency and accuracy."
+6,data/209_18_6_2_1_wheelchair.txt,209,wheelchair,"1) The anomalous trial likely indicates irregular movement patterns or sensor errors for Subject 209 during the wheelchair task as evidenced by high variability in motion features and zero-speed fractions.
+
+2) Possible causes:
+   - Sensor artifact due to noise or interference affecting measurement accuracy.
+   - Wrong label assignment leading to misinterpretation of movement phases.
+   - Subject-specific movement strategy causing atypical kinematics not representative of the general population's wheelchair use patterns.
+
+3) Concrete checks:
+   - Plot and visually inspect spread, speed mean, jerk standard deviation for irregularities or noise spikes that could indicate sensor artifacts.
+   - Review labeling protocol to ensure accuracy in phase identification within the dataset metadata."
+7,data/201_18_2_19_2_wheelchair.txt,201,wheelchair,"1) The anomalous trial suggests a deviation in the subject's movement patterns that is significantly different from typical wheelchair motion time-series data for this task and individual.
+2) Likely causes: sensor artifact; segmentation/cropping error; file corruption or format issue.
+3) Concrete checks to validate: plot acceleration, speed, and path length signals over the trial duration; verify that there are no missing values in any of these features for this subject during the anomalous trial period."
+8,data/201_18_1_5_2_wheelchair.txt,201,wheelchair,"1) The multivariate distance score indicates that the trial for Subject 201 on wheelchair task is an outlier with respect to speed variability and acceleration consistency compared to other trials in this dataset.
+
+2) Likely causes:
+   - Sensor artifact or noise affecting measurements of motion variables (speed, acceleration).
+   - Wrong label assigned to the trial data within the file system leading to misinterpretation during analysis.
+   - Subject-specific movement strategy that deviates from typical wheelchair motions not accounted for in standard models.
+
+3) Concrete checks:
+   - Plot speed and acceleration signals over time; look for irregular patterns or noise spikes indicative of sensor issues.
+   - Verify the label associated with Subject 201's trial data to ensure it matches expected values (e.g., age, gender)."
+9,data/209_18_6_1_1_wheelchair.txt,209,wheelchair,"1) The anomalous trial likely indicates an irregularity in the subject's wheelchair movement pattern due to one or more factors affecting motion consistency and sensor reliability within a single task session for Subject 209 on file data/209_18_6_1_1_wheelchair.txt, as suggested by significant deviations in spread mean, speed variance, path length variability, zero-speed fraction, standard deviation of these features, and acceleration consistency from the expected norms for wheelchair motion time-series data.
+
+2) Likely causes: 
+   - Sensor artifact affecting measurement accuracy.
+   - File corruption or format issue leading to distorted readings.
+   - Wrong label applied during dataset annotation, misrepresenting the subject's actual movement pattern.
+
+3) Concrete checks for validation:
+   - Plot signals of spread mean and speed variance against time stamps in trial segments; look for irregular spikes or drops that do not correlate with expected wheelchair movements.
+   - Verify file integrity by checking the header information, ensuring it matches known dataset structure and labeling conventions to confirm correct annotation labels are applied"
+10,data/209_18_6_3_1_wheelchair.txt,209,wheelchair,"1) The anomalous trial suggests a deviation in the subject's movement pattern that is inconsistent with typical wheelchair navigation behavior as indicated by elevated spread and jerk metrics alongside reduced speed consistency during this instance.
+2) Likely causes: sensor artifact, segmentation/cropping error; less likely but possible cause: wrong label or file corruption/format issue due to the nature of other features not indicating a systemic problem with data integrity.
+3) Concrete checks: plot speed and jerk signals over time for visual inspection anomalies; verify that trial duration matches expected range based on task guidelines, ensuring no truncation or padding occurred inadvertently during file handling."
+11,data/212_18_6_2_2_wheelchair.txt,212,wheelchair,"1) The anomalous trial likely indicates an irregularity in the subject's wheelchair movement pattern that deviates significantly from typical motion characteristics as measured by robust statistical metrics.
+2) Possible causes: sensor artifact; segmentation/cropping error; file corruption or format issue.
+3) Concrete checks to validate: plot signals for visual inspection of irregularities, verify filename label accuracy and integrity check on the data file's contents."
+12,data/201_18_2_2_2_wheelchair.txt,201,wheelchair,"1) The anomalous trial likely indicates a deviation in the subject's wheelchair movement pattern characterized by unusual acceleration mean and path length variability with high z-scores suggesting significant outliers from typical motion patterns within this dataset of Subject 201 performing a single task.
+
+2) Likely causes:
+   - Sensor artifact due to noise or interference affecting measurement accuracy.
+   - Wrong label assignment leading to misinterpretation of the trial's nature and characteristics.
+   - File corruption/format issue resulting in distorted data representation, potentially altered by software processing errors during file handling.
+
+3) Concrete checks:
+   - Plot acceleration mean over time for visual inspection against expected wheelchair movement patterns to identify any irregular spikes or drops indicative of sensor artifacts.
+   - Verify the trial label in metadata and cross-reference with subject activity logs if available, ensuring consistency between labeled tasks and actual recorded movements."
+13,data/217_18_8_3_1_wheelchair.txt,217,wheelchair,"1) The multivariate distance score indicates that the trial likely deviates from expected motion patterns due to an anomaly in acceleration and speed consistency along with significant path length variability.
+2) Possible causes: sensor artifact; segmentation/cropping error; subject-specific movement strategy (e.g., a distinctive gait pattern).
+3) Concrete checks: plot the signals for visual inspection of abrupt changes or noise spikes, verify that data is correctly labeled and not misclassified in terms of activity type within its file labeling system."
+14,data/203_18_5_3_1_wheelchair.txt,203,wheelchair,"1) The anomalous trial likely indicates a deviation in the subject's movement pattern that is not consistent with typical wheelchair motion or could suggest an issue affecting data quality such as sensor error or corruption.
+2) Likely causes:
+   - Sensor artifact due to noise or interference during recording.
+   - File corruption/format issue leading to distorted signal representation.
+3) Concrete checks for validation:
+   - Plot the signals of interest (axis_corr, speed, jerk, acceleration) and visually inspect them for any irregular patterns that deviate from expected norms.
+   - Verify if there are missing values or abrupt changes in data continuity within the trial timeframe which might suggest corruption issues during file transfer/storage."
+15,data/209_18_6_5_1_wheelchair.txt,209,wheelchair,"1) The anomalous trial suggests a deviation in the wheelchair's motion patterns that could be due to irregularities or errors within the data collection process or subject behavior.
+2) Likely causes: sensor artifact; segmentation/cropping error; file corruption/format issue.
+3) Concrete checks: plot signals for visual anomalies, verify filename label and integrity of metadata associated with this trial."
+16,data/217_18_4_3_1_wheelchair.txt,217,wheelchair,"1) The anomalous trial likely indicates irregular movement patterns or potential data issues affecting the wheelchair subject's motion time-series analysis.
+2) Possible causes: sensor artifact; segmentation/cropping error; file corruption/format issue.
+3) Concrete checks to perform: plot speed, acceleration, and jerk signals over time for visual inspection of anomalies or irregularities; verify the integrity of data files using checksums or hashes against known good copies if available."
+17,data/209_18_6_6_1_wheelchair.txt,209,wheelchair,"1) The anomalous trial likely indicates a deviation in the subject's wheelchair motion that could be due to an external influence or internal strategy affecting movement consistency and control.
+2) Possible causes: sensor artifact; segmentation/cropping error during data preprocessing; file corruption/format issue leading to misinterpretation of raw signals.
+3) Concrete checks: plot the acceleration, jerk, and speed time series for visual inspection anomalies; verify that no segments are missing from the trial's start or end points in the dataset metadata."
+18,data/201_18_2_6_2_wheelchair.txt,201,wheelchair,"1) The anomalous trial suggests a deviation in the subject's wheelchair motion with unexpectedly consistent speed and acceleration patterns that are not typical for natural movement sequences.
+2) Likely causes: sensor artifact; segmentation/cropping error during data preprocessing; file corruption or format issue affecting data integrity.
+3) Concrete checks to validate: plot the path length, mean speed, standard deviation of speed and acceleration over time segments within the trial for visual inspection; verify that there are no missing values in these metrics across all frames of the anomalous segment."
+19,data/201_18_3_4_2_wheelchair.txt,201,wheelchair,"1) The anomalous trial suggests a deviation in the subject's wheelchair motion that is statistically significant based on robust z-scores for speed variability and acceleration mean differences.
+2) Likely causes: sensor artifact; segmentation/cropping error; wrong label assignment to this particular data point or task instance.
+3) Concrete checks: plot the signals of interest (speed, acceleration); verify that labels in filenames match trial identifiers on record for consistency and accuracy."
+20,data/217_18_4_2_1_wheelchair.txt,217,wheelchair,"1) The anomalous trial suggests a deviation in the subject's wheelchair motion characterized by unusual speed variability and acceleration patterns that are not typical for this individual or expected within normal ranges of movement quality control standards.
+2) Likely causes: sensor artifact, segmentation/cropping error; less likely but possible cause: wrong label assignment to trial data.
+3) Concrete checks: 
+   - Plot speed and acceleration signals over time to visually inspect for irregular patterns or noise indicative of a sensor issue.
+   - Verify the integrity of file format (e.g., using checksums, examining metadata)."
