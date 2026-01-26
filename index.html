@@ -567,10 +567,16 @@
   }
 
   function passesLabelFilter(r){
-    const want = (el("clabel")?.value || "all").toLowerCase();
-    if(want === "all") return true;
-    return String(r.label || "").toLowerCase() === want;
-  }
+  const sel = document.getElementById("clabel");
+  const raw = (sel && sel.value) ? String(sel.value) : "all";
+  const want = raw.trim().toLowerCase();
+
+  // accept multiple “all” variants safely
+  if(!want || want === "all" || want.includes("all")) return true;
+
+  const lab = String(r.label || "").trim().toLowerCase();
+  return lab === want;
+}
 
   function renderC(){
     const tbody = el("ctbl").querySelector("tbody");
