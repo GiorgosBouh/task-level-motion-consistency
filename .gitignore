@@ -1,0 +1,4 @@
+
+# generated
+outputs/*_anomaly_topN.txt
+outputs/consistency_labels_base.csv
