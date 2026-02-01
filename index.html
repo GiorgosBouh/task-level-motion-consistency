@@ -267,7 +267,6 @@
     return Number.isFinite(n) ? n : null;
   }
 
-<<<<<<< HEAD
   // -------- Natural language explanation (client-side) --------
   // Accepts either:
   //  (a) already-natural text -> returns as-is
@@ -330,59 +329,12 @@
     return `${s1} ${s2} ${s3}`.trim();
   }
 
-=======
-  // ---- Better explanation rendering for your compact summaries ----
-  // Expected format examples:
-  // "dom=jerk; score01_pct=1.000; support=[accel|jerk|smoothness:high, jerk|smoothness:high]"
-  function parseCompactExplanation(s){
-    const t = String(s||"").trim();
-    if(!t) return null;
-    if(!t.startsWith("dom=")) return null;
-
-    const domMatch = t.match(/dom=([^;]+)\s*;/i);
-    const scoreMatch = t.match(/score01_pct=([0-9.]+)/i);
-    const supportMatch = t.match(/support=\[([^\]]*)\]/i);
-
-    const dom = domMatch ? domMatch[1].trim() : "";
-    const score = scoreMatch ? scoreMatch[1].trim() : "";
-    const supportRaw = supportMatch ? supportMatch[1].trim() : "";
-
-    const supports = supportRaw && supportRaw !== "—"
-      ? supportRaw.split(",").map(x=>x.trim()).filter(Boolean)
-      : [];
-
-    return {dom, score, supports};
-  }
-
->>>>>>> 237d34e66c6fee02f3d378ce7b3f5427d6d3763b
   function renderExplanation(text){
-<<<<<<< HEAD
     const nat = toNaturalExplanation(text);
 
     if(!nat) return `<span class="small err">No explanation</span>`;
     const safe = escapeHtml(nat);
     if(safe.length <= 220) return `<span>${safe}</span>`;
-=======
-    if(!text) return `<span class="small err">No explanation</span>`;
-
-    const parsed = parseCompactExplanation(text);
-    if(parsed){
-      const domTag = parsed.dom ? `<span class="tag">dominant: ${escapeHtml(parsed.dom)}</span>` : "";
-      const scoreTag = parsed.score ? `<span class="tag">score01_pct: ${escapeHtml(parsed.score)}</span>` : "";
-      const supports = parsed.supports.length
-        ? parsed.supports.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join("")
-        : `<span class="small">No high-support family (by rules)</span>`;
-
-      return `
-        <div>${domTag}${scoreTag}</div>
-        <div style="margin-top:4px">${supports}</div>
-      `;
-    }
-
-    // fallback: show raw, collapsible if long
-    const safe = escapeHtml(text);
-    if(safe.length <= 160) return `<span>${safe}</span>`;
->>>>>>> 237d34e66c6fee02f3d378ce7b3f5427d6d3763b
     return `
       <details>
         <summary>Show</summary>
@@ -497,17 +449,10 @@
   async function load(){
     const task = el("task").value;
 
-<<<<<<< HEAD
     // ✅ use outputs/ (not outputs_unfiltered/)
     const scoresPath = `outputs/${task}_anomaly_scores.csv`;
     const explPath   = `outputs/${task}_anomaly_explanations.csv`;
 
-=======
-    // ✅ FIX: load from outputs/
-    const scoresPath = `outputs/${task}_anomaly_scores.csv`;
-    const explPath   = `outputs/${task}_anomaly_explanations.csv`;
-
->>>>>>> 237d34e66c6fee02f3d378ce7b3f5427d6d3763b
     el("status").innerHTML = `<span class="small">Loading…</span>`;
     try{
       const [scoresTxt, explTxt] = await Promise.all([
@@ -542,170 +487,7 @@
   el("topn").addEventListener("change", render);
   el("q").addEventListener("input", render);
 
-<<<<<<< HEAD
   // initial load
-=======
-  // =========================
-  // Consistency state + logic
-  // =========================
-
-  let CSTATE = {rows:[], sortKey:"subject_id", sortAsc:true, hasNewSchema:false};
-
-  function tryParseJsonArray(s){
-    if(!s) return [];
-    const t = String(s).trim();
-    try{
-      const arr = JSON.parse(t);
-      return Array.isArray(arr) ? arr : [];
-    }catch(_){
-      if(!t) return [];
-      if(t.includes("|")) return t.split("|").map(x=>x.trim()).filter(Boolean);
-      if(t.includes(";")) return t.split(";").map(x=>x.trim()).filter(Boolean);
-      if(t.includes(",")) return t.split(",").map(x=>x.trim()).filter(Boolean);
-      return [t];
-    }
-  }
-
-  function labelTag(label){
-    const l = String(label || "").toLowerCase();
-    let cls = "tag";
-    if(l === "task_invariant") cls += " label-invariant";
-    else if(l === "task_specific") cls += " label-specific";
-    else if(l === "inconsistent") cls += " label-inconsistent";
-    else if(l === "insufficient_tasks") cls += " label-insufficient";
-    return `<span class="${cls}">${escapeHtml(label || "")}</span>`;
-  }
-
-  function passesLabelFilter(r){
-    const sel = document.getElementById("clabel");
-    const raw = (sel && sel.value) ? String(sel.value) : "all";
-    const want = raw.trim().toLowerCase();
-    if(!want || want === "all" || want.includes("all")) return true;
-    const lab = String(r.label || "").trim().toLowerCase();
-    return lab === want;
-  }
-
-  function renderC(){
-    const tbody = el("ctbl").querySelector("tbody");
-    tbody.innerHTML = "";
-
-    const q = el("cq").value.trim().toLowerCase();
-    const limit = Number(el("climit").value);
-
-    let rows = CSTATE.rows.slice(0);
-
-    if(q){
-      rows = rows.filter(r => String(r.subject_id).toLowerCase().includes(q));
-    }
-
-    rows = rows.filter(passesLabelFilter);
-
-    const k = CSTATE.sortKey;
-    const asc = CSTATE.sortAsc;
-    rows.sort((a,b)=>{
-      const av=a[k], bv=b[k];
-      const an = toNum(av), bn = toNum(bv);
-      let cmp = 0;
-      if(an!==null && bn!==null) cmp = an - bn;
-      else cmp = String(av??"").localeCompare(String(bv??""));
-      return asc ? cmp : -cmp;
-    });
-
-    const shown = rows.slice(0, limit);
-    shown.forEach(r=>{
-      const fams = tryParseJsonArray(r.dominant_families);
-      const tasks = tryParseJsonArray(r.supporting_tasks);
-
-      const isInsufficient = String(r.label||"").toLowerCase() === "insufficient_tasks";
-      const tasksAvail = r.tasks_available ?? "";
-
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${escapeHtml(r.subject_id ?? "")}</td>
-        <td>${labelTag(r.label)}</td>
-        <td>${escapeHtml(tasksAvail)}</td>
-        <td>${escapeHtml(r.confidence ?? "")}</td>
-        <td>${fams.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join("") || `<span class="small err">—</span>`}</td>
-        <td>${tasks.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join("") || `<span class="small err">—</span>`}</td>
-        <td>${isInsufficient ? `<span class="small">${escapeHtml(r.note || "")}</span>` : `<span class="small">—</span>`}</td>
-        <td>
-          <button class="focusBtn" data-subj="${escapeHtml(r.subject_id ?? "")}" ${isInsufficient ? "disabled" : ""}>
-            Focus
-          </button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    el("cfilesBadge").textContent = `rows: ${CSTATE.rows.length} | filtered: ${rows.length} | showing: ${shown.length}`;
-
-    const colsNew = ["subject_id","tasks_available","label","confidence","supporting_tasks","dominant_families","note","error"];
-    const colsOld = ["subject_id","label","confidence","supporting_tasks","dominant_families","error"];
-    const cols = CSTATE.hasNewSchema ? colsNew : colsOld;
-
-    const csv = toCSV(shown, cols);
-    const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
-    const url = URL.createObjectURL(blob);
-    const a = el("cdownload");
-    a.href = url;
-    a.download = `consistency_labels_${el("clabel").value || "all"}_top${limit}.csv`;
-
-    document.querySelectorAll(".focusBtn").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        if(btn.disabled) return;
-        const sid = btn.getAttribute("data-subj") || "";
-        el("q").value = sid;
-        render();
-        window.scrollTo({top: 0, behavior: "smooth"});
-      });
-    });
-  }
-
-  async function loadConsistency(){
-    // ✅ FIX: load from outputs/
-    const path = "outputs/consistency_labels.csv";
-    el("cstatus").innerHTML = `<span class="small">Loading…</span>`;
-    try{
-      const txt = await fetchText(path);
-      const rows = parseCSV(txt);
-
-      CSTATE.hasNewSchema = rows.length ? Object.prototype.hasOwnProperty.call(rows[0], "tasks_available") : false;
-
-      CSTATE.rows = rows.map(r=>({
-        subject_id: r.subject_id ?? r.subject ?? r.subj ?? "",
-        tasks_available: r.tasks_available ?? "",
-        label: r.label ?? "",
-        confidence: r.confidence ?? "",
-        dominant_families: r.dominant_families ?? r.families ?? "",
-        supporting_tasks: r.supporting_tasks ?? r.tasks ?? "",
-        note: r.note ?? "",
-        error: r.error ?? ""
-      }));
-
-      el("cstatus").innerHTML = `<span class="small ok">Loaded ${CSTATE.rows.length} subjects.</span>`;
-      renderC();
-    }catch(e){
-      el("cstatus").innerHTML = `<span class="small err">${escapeHtml(e.message)}</span>`;
-      CSTATE.rows = [];
-      renderC();
-    }
-  }
-
-  document.querySelectorAll("th[data-ck]").forEach(th=>{
-    th.addEventListener("click", ()=>{
-      const k = th.getAttribute("data-ck");
-      if(CSTATE.sortKey === k) CSTATE.sortAsc = !CSTATE.sortAsc;
-      else { CSTATE.sortKey = k; CSTATE.sortAsc = true; }
-      renderC();
-    });
-  });
-
-  el("creload").addEventListener("click", loadConsistency);
-  el("cq").addEventListener("input", renderC);
-  el("climit").addEventListener("change", renderC);
-  el("clabel").addEventListener("change", renderC);
-
->>>>>>> 237d34e66c6fee02f3d378ce7b3f5427d6d3763b
   load();
 </script>
 
