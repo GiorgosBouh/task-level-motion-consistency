@@ -335,11 +335,9 @@
         } else cur += ch;
       }
     }
-    // push last row even if empty last line
     row.push(cur);
     rows.push(row);
 
-    // trim trailing empty rows
     return rows.filter(r => r.some(x => String(x||"").trim().length));
   }
 
@@ -376,8 +374,47 @@
     return Number.isFinite(n) ? n : null;
   }
 
+  // ---- Better explanation rendering for your compact summaries ----
+  // Expected format examples:
+  // "dom=jerk; score01_pct=1.000; support=[accel|jerk|smoothness:high, jerk|smoothness:high]"
+  function parseCompactExplanation(s){
+    const t = String(s||"").trim();
+    if(!t) return null;
+    if(!t.startsWith("dom=")) return null;
+
+    const domMatch = t.match(/dom=([^;]+)\s*;/i);
+    const scoreMatch = t.match(/score01_pct=([0-9.]+)/i);
+    const supportMatch = t.match(/support=\[([^\]]*)\]/i);
+
+    const dom = domMatch ? domMatch[1].trim() : "";
+    const score = scoreMatch ? scoreMatch[1].trim() : "";
+    const supportRaw = supportMatch ? supportMatch[1].trim() : "";
+
+    const supports = supportRaw && supportRaw !== "—"
+      ? supportRaw.split(",").map(x=>x.trim()).filter(Boolean)
+      : [];
+
+    return {dom, score, supports};
+  }
+
   function renderExplanation(text){
     if(!text) return `<span class="small err">No explanation</span>`;
+
+    const parsed = parseCompactExplanation(text);
+    if(parsed){
+      const domTag = parsed.dom ? `<span class="tag">dominant: ${escapeHtml(parsed.dom)}</span>` : "";
+      const scoreTag = parsed.score ? `<span class="tag">score01_pct: ${escapeHtml(parsed.score)}</span>` : "";
+      const supports = parsed.supports.length
+        ? parsed.supports.map(x=>`<span class="tag">${escapeHtml(x)}</span>`).join("")
+        : `<span class="small">No high-support family (by rules)</span>`;
+
+      return `
+        <div>${domTag}${scoreTag}</div>
+        <div style="margin-top:4px">${supports}</div>
+      `;
+    }
+
+    // fallback: show raw, collapsible if long
     const safe = escapeHtml(text);
     if(safe.length <= 160) return `<span>${safe}</span>`;
     return `
@@ -498,6 +535,8 @@
 
   async function load(){
     const task = el("task").value;
+
+    // ✅ FIX: load from outputs/
     const scoresPath = `outputs/${task}_anomaly_scores.csv`;
     const explPath   = `outputs/${task}_anomaly_explanations.csv`;
 
@@ -567,16 +606,13 @@
   }
 
   function passesLabelFilter(r){
-  const sel = document.getElementById("clabel");
-  const raw = (sel && sel.value) ? String(sel.value) : "all";
-  const want = raw.trim().toLowerCase();
-
-  // accept multiple “all” variants safely
-  if(!want || want === "all" || want.includes("all")) return true;
-
-  const lab = String(r.label || "").trim().toLowerCase();
-  return lab === want;
-}
+    const sel = document.getElementById("clabel");
+    const raw = (sel && sel.value) ? String(sel.value) : "all";
+    const want = raw.trim().toLowerCase();
+    if(!want || want === "all" || want.includes("all")) return true;
+    const lab = String(r.label || "").trim().toLowerCase();
+    return lab === want;
+  }
 
   function renderC(){
     const tbody = el("ctbl").querySelector("tbody");
@@ -587,15 +623,12 @@
 
     let rows = CSTATE.rows.slice(0);
 
-    // search filter
     if(q){
       rows = rows.filter(r => String(r.subject_id).toLowerCase().includes(q));
     }
 
-    // label filter
     rows = rows.filter(passesLabelFilter);
 
-    // sort
     const k = CSTATE.sortKey;
     const asc = CSTATE.sortAsc;
     rows.sort((a,b)=>{
@@ -635,7 +668,6 @@
 
     el("cfilesBadge").textContent = `rows: ${CSTATE.rows.length} | filtered: ${rows.length} | showing: ${shown.length}`;
 
-    // download current view
     const colsNew = ["subject_id","tasks_available","label","confidence","supporting_tasks","dominant_families","note","error"];
     const colsOld = ["subject_id","label","confidence","supporting_tasks","dominant_families","error"];
     const cols = CSTATE.hasNewSchema ? colsNew : colsOld;
@@ -647,7 +679,6 @@
     a.href = url;
     a.download = `consistency_labels_${el("clabel").value || "all"}_top${limit}.csv`;
 
-    // bind focus buttons
     document.querySelectorAll(".focusBtn").forEach(btn=>{
       btn.addEventListener("click", ()=>{
         if(btn.disabled) return;
@@ -660,16 +691,15 @@
   }
 
   async function loadConsistency(){
+    // ✅ FIX: load from outputs/
     const path = "outputs/consistency_labels.csv";
     el("cstatus").innerHTML = `<span class="small">Loading…</span>`;
     try{
       const txt = await fetchText(path);
       const rows = parseCSV(txt);
 
-      // schema detection
       CSTATE.hasNewSchema = rows.length ? Object.prototype.hasOwnProperty.call(rows[0], "tasks_available") : false;
 
-      // tolerant mapping
       CSTATE.rows = rows.map(r=>({
         subject_id: r.subject_id ?? r.subject ?? r.subj ?? "",
         tasks_available: r.tasks_available ?? "",
@@ -704,7 +734,6 @@
   el("climit").addEventListener("change", renderC);
   el("clabel").addEventListener("change", renderC);
 
-  // Initial loads
   load();
   loadConsistency();
 </script>
