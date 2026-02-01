@@ -9,4 +9,5 @@ rank,path,explanation
 8,data/RawData/307_18_6_3_1_sit.txt,"dom=jerk; score01_pct=0.936; support=[accel:medium, jerk:high]"
 9,data/RawData/306_18_6_1_1_sit.txt,dom=jerk; score01_pct=0.927; support=[acceleration|jerk|smoothness:high]
 10,data/RawData/307_18_6_5_1_sit.txt,"dom=jerk; score01_pct=0.918; support=[speed:high, accel:medium, jerk:high]"
+11,/data/RawData/306_18_6_7_1_sit.txt,dom=jerk; score01_pct=0.909; support=[acceleration|jerk|smoothness:high]
 12,data/RawData/306_18_6_2_1_sit.txt,dom=jerk; score01_pct=0.900; support=[speed|accel|jerk|smoothness:high]

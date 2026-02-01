@@ -1,5 +1,6 @@
 rank,path,explanation
 1,data/RawData/214_18_4_4_1_Stand-frame.txt,"dom=jerk; score01_pct=1.000; support=[acceleration:medium, jerk:high]"
 2,data/RawData/214_18_6_2_1_Stand-frame.txt,dom=jerk; score01_pct=0.981; support=[jerk:high]
+3,/data/RawData/214_18_6_3_1_Stand-frame.txt,"dom=jerk; score01_pct=0.962; support=[acceleration:high, jerk:high]"
 4,data/RawData/214_18_6_4_1_Stand-frame.txt,"dom=jerk; score01_pct=0.923; support=[accel:high, jerk:high]"
 5,data/RawData/214_18_6_1_1_Stand-frame.txt,"dom=jerk; score01_pct=0.904; support=[accel:medium, jerk:high]"

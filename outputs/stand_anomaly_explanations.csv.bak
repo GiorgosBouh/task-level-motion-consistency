@@ -2,33 +2,44 @@ rank,path,explanation
 1,data/RawData/202_18_3_2_3_stand.txt,"dom=jerk; score01_pct=1.000; support=[accel|jerk|smoothness:high, jerk|smoothness:high]"
 2,data/RawData/302_18_5_9_1_stand.txt,dom=jerk; score01_pct=0.999; support=[—]
 3,data/RawData/107_18_6_2_1_stand.txt,dom=jerk; score01_pct=0.998; support=[jerk:high]
+4,data/RawData/105_18_6_5_1_stand,dom=jerk; score01_pct=0.998; support=[jerk:high]
 5,data/RawData/215_18_6_2_1_stand.txt,"dom=jerk; score01_pct=0.997; support=[speed:high, accel:medium, jerk:high]"
+6,data/RawData/102_18_6_2_1_stand,dom=jerk; score01_pct=0.996; support=[jerk:high]
 7,data/RawData/105_18_6_1_1_stand.txt,"dom=jerk; score01_pct=0.995; support=[acceleration:medium, jerk:high]"
 8,data/RawData/302_18_3_8_1_stand.txt,dom=jerk; score01_pct=0.994; support=[jerk:high]
 9,data/RawData/105_18_6_3_1_stand.txt,dom=jerk; score01_pct=0.993; support=[jerk:high]
 10,data/RawData/302_18_6_12_1_stand.txt,"dom=jerk; score01_pct=0.993; support=[accel:medium, jerk:high, smoothness:medium]"
+11,data/RawData/207_18_3_7_2_stand,dom=jerk; score01_pct=0.992; support=[jerk:high]
 12,data/RawData/207_18_3_8_2_stand.txt,dom=jerk; score01_pct=0.991; support=[jerk:high]
 13,data/RawData/303_18_2_11_1_stand.txt,"dom=jerk; score01_pct=0.990; support=[accel:medium, jerk:high, smoothness:medium]"
 14,data/RawData/302_18_2_7_1_stand.txt,"dom=jerk; score01_pct=0.989; support=[jerk:high, speed:medium, acceleration:medium]"
 15,data/RawData/202_18_2_1_3_stand.txt,"dom=jerk; score01_pct=0.989; support=[jerk:high, acceleration:medium]"
+16,data/RawData/305_18_6_11_1_stand,dom=accel; score01_pct=0.988; support=[accel:high]
+17,data/RawData/307_18_6_11_1_stand,dom=jerk; score01_pct=0.987; support=[jerk:high]
+18,data/RawData/306_18_6_11_1_stand,"dom=jerk; score01_pct=0.986; support=[accel:medium, jerk:high, smoothness:medium]"
 19,data/RawData/301_18_6_10_1_stand.txt,dom=jerk; score01_pct=0.985; support=[acceleration:medium]
 20,data/RawData/215_18_6_8_1_stand.txt,dom=jerk; score01_pct=0.984; support=[jerk:high]
+21,/data/RawData/106_18_6_3_1_stand.txt,dom=jerk; score01_pct=0.984; support=[jerk:high]
 22,data/RawData/211_18_6_2_1_stand.txt,"dom=jerk; score01_pct=0.983; support=[acceleration:medium, jerk:high]"
 23,data/RawData/106_18_6_5_1_stand.txt,dom=jerk; score01_pct=0.982; support=[jerk:high]
 24,data/RawData/105_18_5_3_1_stand.txt,dom=jerk; score01_pct=0.981; support=[jerk:high]
 25,data/RawData/307_18_6_12_1_stand.txt,dom=jerk; score01_pct=0.980; support=[jerk:high]
+26,data/RawData/103_18_6_1_1_stand,dom=jerk; score01_pct=0.979; support=[jerk:high]
 27,data/RawData/106_18_6_6_1_stand.txt,dom=accel; score01_pct=0.978; support=[accel:high]
 28,data/RawData/307_18_6_9_1_stand.txt,"dom=jerk; score01_pct=0.976; support=[jerk:high, acceleration|speed:medium]"
 29,data/RawData/207_18_3_13_2_stand.txt,dom=jerk; score01_pct=0.975; support=[jerk:high]
+30,data/RawData/207_18_3_6_2_stand,"dom=jerk; score01_pct=0.975; support=[jerk:high, acceleration:medium]"
 31,data/RawData/306_18_6_12_1_stand.txt,"dom=jerk; score01_pct=0.974; support=[accel:medium, jerk:high]"
 32,data/RawData/303_18_5_9_1_stand.txt,dom=jerk; score01_pct=0.973; support=[jerk:high]
 33,data/RawData/216_18_6_6_1_stand.txt,dom=acceleration|jerk; score01_pct=0.972; support=[acceleration|jerk:high]
 34,data/RawData/306_18_6_10_1_stand.txt,dom=jerk; score01_pct=0.971; support=[jerk:high]
 35,data/RawData/107_18_6_6_1_stand.txt,"dom=jerk; score01_pct=0.971; support=[accel:medium, jerk:high]"
+36,data/RawData/106_18_6_1_1_stand,"dom=accel; score01_pct=0.970; support=[accel:high, jerk:medium]"
 37,data/RawData/302_18_6_11_1_stand.txt,"dom=jerk; score01_pct=0.969; support=[accel:high, jerk:medium]"
 38,data/RawData/106_18_6_2_1_stand.txt,"dom=jerk; score01_pct=0.968; support=[accel:medium, jerk:high]"
 39,data/RawData/104_18_6_6_1_stand.txt,"dom=jerk; score01_pct=0.967; support=[acceleration:medium, jerk:high]"
 40,data/RawData/207_18_0_20_2_stand.txt,dom=jerk; score01_pct=0.966; support=[jerk:high]
+41,data/RawData/216_18_6_5_1_stand,"dom=jerk; score01_pct=0.966; support=[accel:medium, jerk:high]"
 42,data/RawData/302_18_6_7_1_stand.txt,dom=jerk; score01_pct=0.965; support=[jerk:high]
 43,data/RawData/307_18_6_7_1_stand.txt,dom=jerk; score01_pct=0.964; support=[jerk:high]
 44,data/RawData/107_18_6_3_1_stand.txt,"dom=jerk; score01_pct=0.963; support=[accel:medium, jerk:high, smoothness:medium]"
@@ -39,23 +50,29 @@ rank,path,explanation
 49,data/RawData/105_18_6_8_1_stand.txt,"dom=jerk; score01_pct=0.958; support=[jerk:high, speed:medium]"
 50,data/RawData/206_18_4_11_1_stand.txt,"dom=jerk; score01_pct=0.957; support=[jerk:high, speed:medium, accel:medium, smoothness:medium]"
 51,data/RawData/103_18_6_3_1_stand.txt,dom=jerk; score01_pct=0.957; support=[jerk:high]
+52,/data/RawData/102_18_6_1_1_stand.txt,"dom=jerk; score01_pct=0.956; support=[acceleration:medium, jerk:high]"
 53,data/RawData/103_18_6_4_1_stand.txt,dom=None; score01_pct=0.955; support=[jerk:high]
 54,data/RawData/307_18_6_10_1_stand.txt,"dom=accel; score01_pct=0.954; support=[accel:high, jerk:medium]"
 55,data/RawData/105_18_5_6_1_stand.txt,"dom=jerk; score01_pct=0.953; support=[accel:medium, jerk:high]"
 56,data/RawData/202_18_3_1_2_stand.txt,dom=jerk; score01_pct=0.953; support=[jerk:high]
 57,data/RawData/207_18_6_1_2_stand.txt,dom=jerk; score01_pct=0.952; support=[jerk:high]
 58,data/RawData/213_18_1_6_2_stand.txt,"dom=jerk; score01_pct=0.951; support=[jerk:high, accel:medium]"
+59,data/RawData/107_18_6_1_1_stand,dom=jerk; score01_pct=0.950; support=[jerk:high]
 60,data/RawData/216_18_6_1_1_stand.txt,"dom=jerk; score01_pct=0.949; support=[jerk:high, speed:medium]"
+61,data/RawData/207_18_3_12_2_stand,"dom=jerk; score01_pct=0.948; support=[acceleration:medium, jerk:high]"
 62,data/RawData/216_18_6_2_1_stand.txt,dom=jerk (derivative of acceleration); score01_pct=0.948; support=[jerk (derivative of acceleration):high]
+63,data/RawData/215_18_6_3_1_stand,"dom=jerk; score01_pct=0.947; support=[accel:medium, jerk:high]"
 64,data/RawData/105_18_6_9_1_stand.txt,"dom=jerk; score01_pct=0.946; support=[accel:high, jerk:high]"
 65,data/RawData/215_18_6_7_1_stand.txt,dom=jerk; score01_pct=0.945; support=[—]
 66,data/RawData/207_18_6_20_2_stand.txt,dom=jerk; score01_pct=0.944; support=[jerk:high]
 67,data/RawData/211_18_6_1_1_stand.txt,dom=jerk; score01_pct=0.944; support=[jerk:high]
 68,data/RawData/102_18_8_3_1_stand.txt,dom=jerk; score01_pct=0.943; support=[jerk:high]
 69,data/RawData/107_18_6_4_1_stand.txt,"dom=accel; score01_pct=0.942; support=[accel:high, jerk:medium]"
+70,data/RawData/207_18_3_14_2_stand,dom=jerk; score01_pct=0.941; support=[jerk:high]
 71,data/RawData/105_18_5_4_1_stand.txt,dom=None; score01_pct=0.940; support=[accel:high]
 72,data/RawData/102_18_6_4_1_stand.txt,dom=None; score01_pct=0.939; support=[—]
 73,data/RawData/206_18_6_8_1_stand.txt,dom=jerk; score01_pct=0.939; support=[jerk:high]
+74,data/RawData/105_18_6_6_1_stand,"dom=jerk; score01_pct=0.938; support=[accel:high, jerk:high]"
 75,data/RawData/305_18_6_8_1_stand.txt,dom=jerk; score01_pct=0.937; support=[jerk:high]
 76,data/RawData/207_18_3_11_2_stand.txt,"dom=jerk; score01_pct=0.936; support=[accel:medium, jerk:high]"
 77,data/RawData/104_18_3_2_1_stand.txt,"dom=jerk; score01_pct=0.935; support=[accel:medium, jerk:high]"
@@ -63,27 +80,36 @@ rank,path,explanation
 79,data/RawData/207_18_6_18_2_stand.txt,dom=jerk; score01_pct=0.934; support=[jerk:high]
 80,data/RawData/207_18_0_16_2_stand.txt,dom=jerk; score01_pct=0.933; support=[—]
 81,data/RawData/102_18_6_5_1_stand.txt,dom=jerk; score01_pct=0.932; support=[jerk:high]
+82,data/RawData/207_18_3_3_2_stand,dom=jerk; score01_pct=0.931; support=[jerk:high]
 83,data/RawData/103_18_4_6_1_stand.txt,"dom=jerk; score01_pct=0.930; support=[jerk:high, accel:medium]"
 84,data/RawData/107_18_6_5_1_stand.txt,dom=jerk; score01_pct=0.930; support=[jerk:high]
 85,data/RawData/103_18_0_5_1_stand.txt,dom=jerk; score01_pct=0.929; support=[jerk:high]
 86,data/RawData/106_18_6_4_1_stand.txt,"dom=jerk; score01_pct=0.928; support=[accel:medium, jerk:high]"
+87,/data/RawData/107_18_0_4_1_stand,"dom=jerk; score01_pct=0.927; support=[jerk:high, acceleration|speed:medium]"
 88,data/RawData/306_18_6_9_1_stand.txt,"dom=jerk; score01_pct=0.926; support=[speed|accel|jerk|smoothness:high, speed|accel|jerk:high, speed|accel:medium, speed|accel|jerk:medium]"
 89,data/RawData/213_18_6_5_1_stand.txt,"dom=jerk; score01_pct=0.925; support=[jerk:high, acceleration|speed:medium]"
+90,data/RawData/207_18_0_7_2_stand,dom=jerk; score01_pct=0.924; support=[jerk:high]
 91,data/RawData/207_18_0_1_2_stand.txt,dom=jerk; score01_pct=0.923; support=[acceleration:medium]
 92,data/RawData/102_18_4_1_1_stand.txt,"dom=jerk; score01_pct=0.922; support=[accel:high, jerk:high]"
+93,data/RawData/202_18_4_2_1_stand,dom=jerk; score01_pct=0.921; support=[jerk:high]
 94,data/RawData/207_18_6_7_2_stand.txt,dom=jerk; score01_pct=0.921; support=[jerk:high]
 95,data/RawData/305_18_6_7_1_stand.txt,"dom=jerk; score01_pct=0.920; support=[accel:medium, jerk:high]"
 96,data/RawData/105_18_6_2_1_stand.txt,"dom=jerk; score01_pct=0.919; support=[jerk:high, speed:medium, smoothness:medium]"
 97,data/RawData/105_18_6_4_1_stand.txt,dom=jerk; score01_pct=0.918; support=[jerk:high]
 98,data/RawData/101_18_6_2_1_stand.txt,"dom=jerk; score01_pct=0.917; support=[accel:medium, jerk:high]"
 99,data/RawData/107_18_5_4_1_stand.txt,dom=jerk|acceleration; score01_pct=0.917; support=[acceleration|jerk:high]
+100,data/RawData/301_18_6_12_1_stand,dom=jerk; score01_pct=0.916; support=[acceleration|jerk|smoothness:high]
 101,data/RawData/211_18_6_6_1_stand.txt,dom=jerk; score01_pct=0.915; support=[jerk:high]
 102,data/RawData/305_18_4_8_1_stand.txt,dom=jerk; score01_pct=0.914; support=[acceleration|jerk:high]
+103,data/RawData/104_18_1_1_1_stand,dom=jerk; score01_pct=0.913; support=[jerk:high]
 104,data/RawData/106_18_5_2_1_stand.txt,"dom=jerk; score01_pct=0.912; support=[accel:high, jerk:high]"
+105,data/RawData/103_18_6_5_1_stand,"dom=jerk; score01_pct=0.912; support=[accel:high, jerk:high]"
 106,data/RawData/102_18_5_3_1_stand.txt,"dom=jerk; score01_pct=0.911; support=[speed:high, accel:high, jerk:high]"
 107,data/RawData/103_18_4_1_1_stand.txt,"dom=jerk; score01_pct=0.910; support=[acceleration:medium, jerk:high]"
+108,/data/RawData/206_18_4_10_1_stand.txt,"dom=jerk; score01_pct=0.909; support=[accel:medium, jerk:high]"
 109,data/RawData/206_18_2_13_1_stand.txt,"dom=jerk; score01_pct=0.908; support=[accel:medium, jerk:high]"
 110,data/RawData/216_18_5_2_1_stand.txt,dom=accel|decel; score01_pct=0.908; support=[acceleration|deceleration:high]
+111,data/RawData/101_18_6_4_1_stand,dom=None; score01_pct=0.907; support=[acceleration|jerk:high]
 112,data/RawData/301_18_6_11_1_stand.txt,"dom=jerk; score01_pct=0.906; support=[accel:high, jerk:high]"
 113,data/RawData/104_18_1_7_1_stand.txt,"dom=None; score01_pct=0.905; support=[speed:high, accel:high]"
 114,data/RawData/307_18_4_9_1_stand.txt,"dom=jerk; score01_pct=0.904; support=[accel:medium, jerk:high]"

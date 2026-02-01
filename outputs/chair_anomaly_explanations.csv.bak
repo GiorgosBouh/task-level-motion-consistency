@@ -1,5 +1,6 @@
 rank,path,explanation
 1,data/RawData/101_18_0_6_1_chair.txt,"dom=jerk; score01_pct=1.000; support=[speed|accel|jerk|smoothness:high, jerk:medium]"
+2,/data/RawData/106_18_6_12_1_chair,"dom=jerk; score01_pct=0.999; support=[accel:medium, jerk:high]"
 3,data/RawData/105_18_6_10_1_chair.txt,"dom=accel; score01_pct=0.998; support=[accel:high, jerk:medium]"
 4,data/RawData/105_18_6_16_1_chair.txt,dom=jerk; score01_pct=0.996; support=[jerk:high]
 5,data/RawData/107_18_6_8_1_chair.txt,dom=jerk; score01_pct=0.995; support=[jerk:high]
@@ -32,6 +33,7 @@ rank,path,explanation
 32,data/RawData/301_18_6_5_1_chair.txt,"dom=jerk; score01_pct=0.963; support=[acceleration:medium, jerk:high]"
 33,data/RawData/304_18_6_1_1_chair.txt,"dom=None; score01_pct=0.962; support=[accel:medium, jerk:high]"
 34,data/RawData/204_18_6_6_1_chair.txt,"dom=jerk; score01_pct=0.961; support=[speed|accel|jerk|smoothness:high, jerk|smoothness:high]"
+35,/data/RawData/101_18_6_7_1_chair.txt,dom=jerk; score01_pct=0.960; support=[accel:medium]
 36,data/RawData/302_18_6_1_1_chair.txt,dom=jerk; score01_pct=0.959; support=[jerk:high]
 37,data/RawData/303_18_6_4_1_chair.txt,"dom=jerk; score01_pct=0.956; support=[jerk:high, speed:medium, accel:medium, smoothness:medium]"
 38,data/RawData/204_18_6_3_1_chair.txt,"dom=jerk; score01_pct=0.955; support=[accel:medium, jerk:high]"

@@ -3,6 +3,7 @@ rank,path,explanation
 2,data/RawData/201_18_6_1_2_wheelchair.txt,"dom=jerk; score01_pct=0.997; support=[accel:medium, jerk:high]"
 3,data/RawData/212_18_6_4_2_wheelchair.txt,dom=jerk; score01_pct=0.994; support=[jerk:high]
 4,data/RawData/201_18_2_8_2_wheelchair.txt,dom=jerk; score01_pct=0.992; support=[jerk:high]
+5,/data/RawData/201_18_6_5_2_wheelchair.txt,dom=jerk; score01_pct=0.989; support=[—]
 6,data/RawData/201_18_3_6_2_wheelchair.txt,"dom=jerk; score01_pct=0.986; support=[accel:medium, jerk:high]"
 7,data/RawData/201_18_6_4_2_wheelchair.txt,dom=acceleration|deceleration; score01_pct=0.983; support=[acceleration|deceleration:high]
 8,data/RawData/201_18_2_33_2_wheelchair.txt,"dom=acceleration|jerk; score01_pct=0.981; support=[speed:high, acceleration|jerk:high]"
@@ -10,10 +11,14 @@ rank,path,explanation
 10,data/RawData/201_18_2_40_2_wheelchair.txt,dom=jerk; score01_pct=0.972; support=[acceleration|jerk|smoothness:high]
 11,data/RawData/209_18_6_5_1_wheelchair.txt,dom=jerk; score01_pct=0.970; support=[jerk:high]
 12,data/RawData/201_18_2_36_1_wheelchair.txt,dom=jerk; score01_pct=0.967; support=[jerk:high]
+13,/data/RawData/201_18_3_12_2_wheelchair,"dom=jerk; score01_pct=0.964; support=[accel:medium, jerk:high]"
 14,data/RawData/217_18_0_2_2_wheelchair.txt,"dom=jerk|smoothness; score01_pct=0.961; support=[speed:high, acceleration:high, jerk|smoothness:high]"
 15,data/RawData/201_18_3_15_2_wheelchair.txt,"dom=jerk; score01_pct=0.958; support=[acceleration:medium, jerk:high]"
+16,/data/RawData/201_18_2_34_2_wheelchair.txt,dom=jerk; score01_pct=0.956; support=[—]
 17,data/RawData/201_18_2_19_2_wheelchair.txt,dom=jerk; score01_pct=0.953; support=[jerk:high]
+18,/data/RawData/201_18_3_13_2_wheelchair.txt,dom=jerk; score01_pct=0.950; support=[acceleration|jerk|smoothness:high]
 19,data/RawData/210_18_6_2_2_wheelchair.txt,dom=jerk; score01_pct=0.947; support=[—]
+20,/data/RawData/212_18_0_1_1_wheelchair.txt,dom=jerk; score01_pct=0.945; support=[jerk:high]
 21,data/RawData/209_18_6_2_1_wheelchair.txt,"dom=jerk; score01_pct=0.942; support=[accel:medium, jerk:high]"
 22,data/RawData/212_18_0_5_1_wheelchair.txt,"dom=jerk; score01_pct=0.939; support=[accel:medium, jerk:high]"
 23,data/RawData/217_18_0_8_1_wheelchair.txt,"dom=jerk; score01_pct=0.936; support=[jerk:high, acceleration:medium]"
