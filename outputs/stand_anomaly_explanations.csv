@@ -1,5 +1,5 @@
 rank,path,subject_id,label,explanation
-1,data/202_18_3_2_3_stand.txt,202,stand,"1) The anomalous trial suggests that there is a significant deviation in the smoothness of motion as indicated by high jerk and acceleration variability along with speed inconsistency for Subject 202 during stand tasks.
+1,data/RawData/202_18_3_2_3_stand.txt,202,stand,"1) The anomalous trial suggests that there is a significant deviation in the smoothness of motion as indicated by high jerk and acceleration variability along with speed inconsistency for Subject 202 during stand tasks.
 
 2) Likely causes:
    - Sensor artifact or noise affecting measurements.
@@ -9,10 +9,10 @@ rank,path,subject_id,label,explanation
 3) Concrete checks:
    - Plot jerk and acceleration signals over time; look for spikes or irregular patterns indicating noise/artifacts.
    - Verify that data segmentations align with expected task durations, ensuring no partial trials are mistakenly included in the analysis."
-2,data/207_18_3_3_2_stand.txt,207,stand,"1) The anomalous trial likely indicates irregular motion patterns due to high jerk and acceleration variability along with speed inconsistencies that are not typical for a standard standing task.
+2,data/RawData/207_18_3_3_2_stand.txt,207,stand,"1) The anomalous trial likely indicates irregular motion patterns due to high jerk and acceleration variability along with speed inconsistencies that are not typical for a standard standing task.
 2) Possible causes: sensor artifacts; segmentation/cropping errors in the data capture process; incorrect labeling of the movement as 'stand'; subject-specific unconventional movement strategy (e.g., shuffling or sway).
 3) Concrete checks to validate: Plot jerk and acceleration signals against time for visual irregularities, verify that file labels match expected trial identifiers in documentation/metadata files."
-3,data/207_18_3_11_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of motion as indicated by elevated jerk, acceleration mean deviations, and speed variability within Subject 207's standing task data file 'data/207_18_3_11_2_stand.txt'.
+3,data/RawData/207_18_3_11_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of motion as indicated by elevated jerk, acceleration mean deviations, and speed variability within Subject 207's standing task data file 'data/207_18_3_11_2_stand.txt'.
    
 2) Likely causes:
    - Sensor artifact or noise in the recording equipment causing spurious jerk and acceleration readings.
@@ -22,44 +22,44 @@ rank,path,subject_id,label,explanation
 3) Concrete checks:
    - Plot jerk and acceleration signals to visually inspect for noise or artifacts spikes correlating with the anomalous trial timeframe.
    - Verify segmentation boundaries within 'data/207_18_3_11_2_stand.txt' against known standing posture markers (e.g., consistent contact force patterns) to ensure proper cropping of relevant data only."
-4,data/202_18_2_1_3_stand.txt,202,stand,"1) The multivariate distance score indicates an anomalous trial in the stand task for Subject 202 due to significant deviations across jerk and acceleration metrics as well as speed consistency.
+4,data/RawData/202_18_2_1_3_stand.txt,202,stand,"1) The multivariate distance score indicates an anomalous trial in the stand task for Subject 202 due to significant deviations across jerk and acceleration metrics as well as speed consistency.
 2) Likely causes: sensor artifact; segmentation/cropping error; subject-specific movement strategy (e.g., compensatory movements).
 3) Concrete checks: plot signals for visual inspection of abrupt changes or noise spikes; verify the duration and label in 'data/202_18_2_1_3_stand.txt' to ensure proper segmentation alignment with labeled phases (e.g., standing, transition)."
-5,data/202_18_4_2_1_stand.txt,202,stand,"1) The anomalous trial suggests a deviation in the subject's movement pattern during standing as indicated by significant variations in speed standard deviation and domain ratio while maintaining relatively consistent acceleration means and jerk statistics across trials.
+5,data/RawData/202_18_4_2_1_stand.txt,202,stand,"1) The anomalous trial suggests a deviation in the subject's movement pattern during standing as indicated by significant variations in speed standard deviation and domain ratio while maintaining relatively consistent acceleration means and jerk statistics across trials.
 2) Likely causes: sensor artifact, wrong label
 3) Concrete checks to validate: plot signals for visual inspection of anomalies; verify the accuracy of trial labels against expected movement patterns"
-6,data/207_18_6_14_2_stand.txt,207,stand,"1) The anomalous trial suggests a significant deviation in the smoothness of motion as indicated by high jerk and acceleration variability along with inconsistent speed changes for Subject 207 during stand tasks.
+6,data/RawData/207_18_6_14_2_stand.txt,207,stand,"1) The anomalous trial suggests a significant deviation in the smoothness of motion as indicated by high jerk and acceleration variability along with inconsistent speed changes for Subject 207 during stand tasks.
 2) Likely causes: sensor artifact; segmentation/cropping error; subject-specific movement strategy (e.g., shuffling weight or balance).
 3) Concrete checks to validate: plot jerk and acceleration signals against time; verify the label in 'data/207_18_6_14_2_stand.txt' for accuracy."
-7,data/207_18_3_10_2_stand.txt,207,stand,"1) The anomalous trial likely indicates an irregularity in the subject's movement pattern during a stand task as evidenced by significant deviations in jerk mean and standard deviation, acceleration mean and standard deviation, speed mean and standard deviation, path length mean, and their respective z-scores.
+7,data/RawData/207_18_3_10_2_stand.txt,207,stand,"1) The anomalous trial likely indicates an irregularity in the subject's movement pattern during a stand task as evidenced by significant deviations in jerk mean and standard deviation, acceleration mean and standard deviation, speed mean and standard deviation, path length mean, and their respective z-scores.
 2) Possible causes: sensor artifact; segmentation/cropping error; subject-specific movement strategy (e.g., compensatory behavior due to a known condition).
 3) Concrete checks: plot jerk, acceleration, speed signals over time for visual inspection of irregularities or noise spikes; verify the integrity and format consistency of 'data/207_18_3_10_2_stand.txt' file against expected standards (e.g., header information matches subject ID)."
-8,data/207_18_3_2_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the subject's movement pattern during standing as indicated by unusual jerk and acceleration metrics with high z-scores relative to other trials within this task.
+8,data/RawData/207_18_3_2_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the subject's movement pattern during standing as indicated by unusual jerk and acceleration metrics with high z-scores relative to other trials within this task.
 2) Likely causes: sensor artifact; segmentation/cropping error; file corruption or format issue.
 3) Concrete checks: plot speed, jerk, and acceleration signals for visual anomalies; verify the integrity of data files (e.g., using checksums)."
-9,data/105_18_6_2_1_stand.txt,105,stand,"1) The anomalous trial likely indicates an irregularity in the subject's movement pattern during the stand task as evidenced by significant deviations in speed variability and jerk metrics compared to typical trials.
+9,data/RawData/105_18_6_2_1_stand.txt,105,stand,"1) The anomalous trial likely indicates an irregularity in the subject's movement pattern during the stand task as evidenced by significant deviations in speed variability and jerk metrics compared to typical trials.
 2) Possible causes: sensor artifact; segmentation/cropping error; file corruption or format issue.
 3) Concrete checks: plot acceleration, jerk signals for visual inspection of irregularities; verify the integrity of data files (checksums, headers)."
-10,data/202_18_4_21_3_stand.txt,202,stand,"1) The anomalous trial suggests a deviation in the subject's movement patterns during the stand task that is statistically significant based on robust z-scores for acceleration and jerk metrics but not necessarily indicative of an error or malfunction without further investigation into potential causes.
+10,data/RawData/202_18_4_21_3_stand.txt,202,stand,"1) The anomalous trial suggests a deviation in the subject's movement patterns during the stand task that is statistically significant based on robust z-scores for acceleration and jerk metrics but not necessarily indicative of an error or malfunction without further investigation into potential causes.
 2) Likely Causes: 
    - Sensor artifact due to noise in measurement devices, leading to spurious data points affecting the time series' statistical properties.
    - Wrong label assignment for this trial could have resulted from misclassification or human error during annotation processes.
 3) Concrete Checks:
    - Plot acceleration and jerk signals over time; look for any irregular patterns that deviate significantly from expected movement profiles in the stand task.
    - Verify if there are discrepancies between trial identifiers (e.g., filename label or subject ID) across different datasets to ensure consistency of data association."
-11,data/207_18_6_6_2_stand.txt,207,stand,"1) The anomalous trial in the stand task likely indicates a deviation from expected movement patterns due to an external factor or error within data acquisition/processing.
+11,data/RawData/207_18_6_6_2_stand.txt,207,stand,"1) The anomalous trial in the stand task likely indicates a deviation from expected movement patterns due to an external factor or error within data acquisition/processing.
 2) Possible causes: sensor artifact; segmentation/cropping issue; subject-specific movement strategy not accounted for during analysis.
 3) Concrete checks: Plot speed, jerk, and acceleration signals over time; verify the integrity of file format (e.g., using a checksum)."
-12,data/207_18_3_13_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of movement during standing as indicated by high jerk (acceleration rate change), mean acceleration, speed variability, domain ratio (proportion between vertical to horizontal movements), path length traveled.
+12,data/RawData/207_18_3_13_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of movement during standing as indicated by high jerk (acceleration rate change), mean acceleration, speed variability, domain ratio (proportion between vertical to horizontal movements), path length traveled.
 2) Likely causes: sensor artifact; segmentation/cropping error; file corruption or format issue.
 3) Concrete checks: Plot jerk and acceleration signals for visual inspection of abrupt changes; verify the integrity of data files (e.g., using checksums)."
-13,data/207_18_6_1_2_stand.txt,207,stand,"1) The anomalous trial likely indicates an atypical movement pattern or a potential data quality issue during the stand task for Subject 207.
+13,data/RawData/207_18_6_1_2_stand.txt,207,stand,"1) The anomalous trial likely indicates an atypical movement pattern or a potential data quality issue during the stand task for Subject 207.
 2) Possible causes: sensor artifact; segmentation/cropping error; subject-specific movement strategy not representative of typical behavior.
 3) Concrete checks to perform: plot jerk and acceleration signals over time, verify that 'stand' is correctly labeled in the filename metadata or accompanying documentation."
-14,data/205_18_5_1_1_stand.txt,205,stand,"1) The anomalous trial likely indicates an irregularity in the subject's movement pattern during the stand task that deviates significantly from expected motion characteristics based on standard deviation and mean metrics for speed, acceleration, jerk, axis correlation, domain ratio, suggesting a potential issue with data quality or recording.
+14,data/RawData/205_18_5_1_1_stand.txt,205,stand,"1) The anomalous trial likely indicates an irregularity in the subject's movement pattern during the stand task that deviates significantly from expected motion characteristics based on standard deviation and mean metrics for speed, acceleration, jerk, axis correlation, domain ratio, suggesting a potential issue with data quality or recording.
 2) Possible causes: sensor artifact; segmentation/cropping error; file corruption/format inconsistency.
 3) Concrete checks to validate: plot the signals in question and visually inspect for irregularities (e.g., spikes); verify that there are no missing values within this trial's data points, which could indicate a recording issue or segmentation problem."
-15,data/207_18_3_1_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the subject's movement pattern during standing as indicated by unusual variations in speed standard deviation and jerk mean across frames within this single task file for Subject ID 207.
+15,data/RawData/207_18_3_1_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the subject's movement pattern during standing as indicated by unusual variations in speed standard deviation and jerk mean across frames within this single task file for Subject ID 207.
 
 2) Likely causes:
    - Sensor artifact due to hardware malfunction or external interference affecting data quality.
@@ -69,18 +69,18 @@ rank,path,subject_id,label,explanation
 3) Concrete checks:
    - Plot speed and jerk signals to visually inspect the anomaly's characteristics (e.g., spikes in acceleration).
    - Verify that Subject ID 207 is correctly labeled as 'stand' within this task file, ensuring accurate categorization of movement phases."
-16,data/202_18_4_19_2_stand.txt,202,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of movement during standing as indicated by elevated jerk mean standard deviations and variations in acceleration metrics compared to other trials within this subject's dataset for stand tasks.
+16,data/RawData/202_18_4_19_2_stand.txt,202,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of movement during standing as indicated by elevated jerk mean standard deviations and variations in acceleration metrics compared to other trials within this subject's dataset for stand tasks.
 2) Likely causes: sensor artifact, segmentation/cropping error; file corruption or format issue (less likely due to z-scores not indicating extreme outliers).
 3) Concrete checks: plot jerk and acceleration signals over time; verify the integrity of data files using checksums."
-17,data/104_18_4_2_1_stand.txt,104,stand,"1) The anomalous trial likely indicates a deviation in the subject's movement pattern during standing that could be due to an irregularity or inconsistency within their motion time-series data for Task: stand.
+17,data/RawData/104_18_4_2_1_stand.txt,104,stand,"1) The anomalous trial likely indicates a deviation in the subject's movement pattern during standing that could be due to an irregularity or inconsistency within their motion time-series data for Task: stand.
 2) Possible causes include sensor artifact and segmentation/cropping errors, as these can directly affect measured features like speed variability and zero velocity fractions without necessarily implicating subject behavior or labeling issues. File corruption could also be a factor if it has led to misrepresentation of data points in the time-series analysis.
 3) Concrete checks:
    - Plot signals for visual inspection of any abrupt changes, artifacts, or inconsistencies that deviate from expected patterns during standing tasks.
    - Verify filename label accuracy and ensure proper file formatting to rule out mislabeling as a source of anomaly in the dataset."
-18,data/207_18_3_9_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of movement during standing as indicated by higher jerk means and standard deviations alongside lower acceleration mean and speed variability.
+18,data/RawData/207_18_3_9_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of movement during standing as indicated by higher jerk means and standard deviations alongside lower acceleration mean and speed variability.
 2) Likely causes: sensor artifact; segmentation/cropping error; subject-specific movement strategy (e.g., shuffling weight or compensatory posture).
 3) Concrete checks to validate: plot the jerk, accel_mean, and axis_corr signals for visual inspection of irregularities; verify that no data is missing within this trial's timeframe using a summary statistics report from motion analysis software."
-19,data/202_18_8_12_1_stand.txt,202,stand,"1) The anomalous trial suggests a deviation in the subject's movement strategy or potential data quality issues during this specific instance of standing motion time-series recording for Subject 202.
+19,data/RawData/202_18_8_12_1_stand.txt,202,stand,"1) The anomalous trial suggests a deviation in the subject's movement strategy or potential data quality issues during this specific instance of standing motion time-series recording for Subject 202.
 
 2) Likely causes:
    - Sensor artifact due to hardware malfunction or external interference affecting measurement accuracy.
@@ -90,6 +90,6 @@ rank,path,subject_id,label,explanation
 3) Concrete checks:
    - Plot and visually inspect speed, jerk, acceleration signals for any irregular spikes or noise indicative of sensor artifacts.
    - Confirm the trial's label accuracy by cross-referencing with task descriptions in metadata to rule out mislabeling errors."
-20,data/207_18_3_14_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of movement during standing as indicated by higher jerk (acceleration rate change), lower acceleration mean, consistent speed standard deviation, domination ratio towards one direction, shorter path length, but similar overall motion time.
+20,data/RawData/207_18_3_14_2_stand.txt,207,stand,"1) The anomalous trial suggests a deviation in the smoothness and consistency of movement during standing as indicated by higher jerk (acceleration rate change), lower acceleration mean, consistent speed standard deviation, domination ratio towards one direction, shorter path length, but similar overall motion time.
 2) Likely causes: sensor artifacts affecting data integrity; segmentation/cropping errors leading to incomplete trials; incorrect label assignment for the task or trial phase; subject-specific movement strategy that differs from normative patterns (e.g., compensatory movements).
 3) Concrete checks: Plot jerk, acceleration mean and standard deviation over time against expected ranges; verify file integrity by checking checksums/hashes if available to rule out corruption or format issues."
