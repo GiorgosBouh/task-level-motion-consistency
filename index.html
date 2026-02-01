@@ -332,7 +332,7 @@
   function renderExplanation(text){
     const nat = toNaturalExplanation(text);
 
-    if(!nat) return `<span class="small err">No explanation</span>`;
+    if(!text) return `<span class="small err">No explanation (not generated for this trial)</span>`;
     const safe = escapeHtml(nat);
     if(safe.length <= 220) return `<span>${safe}</span>`;
     return `
