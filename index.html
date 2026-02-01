@@ -498,8 +498,8 @@
 
   async function load(){
     const task = el("task").value;
-    const scoresPath = `outputs_unfiltered/${task}_anomaly_scores.csv`;
-    const explPath   = `outputs_unfiltered/${task}_anomaly_explanations.csv`;
+    const scoresPath = `outputs/${task}_anomaly_scores.csv`;
+    const explPath   = `outputs/${task}_anomaly_explanations.csv`;
 
     el("status").innerHTML = `<span class="small">Loading…</span>`;
     try{
@@ -660,7 +660,7 @@
   }
 
   async function loadConsistency(){
-    const path = "outputs_unfiltered/consistency_labels.csv";
+    const path = "outputs/consistency_labels.csv";
     el("cstatus").innerHTML = `<span class="small">Loading…</span>`;
     try{
       const txt = await fetchText(path);
