@@ -2,3 +2,41 @@
 # generated
 outputs/*_anomaly_topN.txt
 outputs/consistency_labels_base.csv
+
+# python
+__pycache__/
+*.py[cod]
+
+# editor/perl backups
+*.bak
+
+# local data/outputs
+/data/
+/outputs_unfiltered/
+/legacy/
+
+# local / generated
+__pycache__/
+*.pyc
+scripts/__pycache__/
+*.bak
+
+# large local data (keep out of git)
+data/
+legacy/
+outputs_unfiltered/
+
+# data & raw files
+data/
+outputs/
+outputs_unfiltered/
+
+# caches
+__pycache__/
+*.pyc
+
+# backups
+*.bak
+
+# env
+.venv/
