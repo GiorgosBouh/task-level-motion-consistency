@@ -124,9 +124,10 @@ def main():
         feat["smoothness_mean"] = float(smoothness)
         feat["smoothness_std"] = 0.0
         feat["smoothness_range"] = 0.0       
-        rows.append({            "path": p,
+        rows.append({
+            "path": p,
             "subject_id": sid,
-                "posture": posture,
+            "posture": posture,
             "gesture": gesture,
             "context": f"{posture}::{gesture}",  # IMPORTANT for cross-context
             "correctness": corr,
