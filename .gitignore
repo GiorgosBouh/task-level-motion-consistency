@@ -25,3 +25,18 @@ scripts/__pycache__/
 data/
 legacy/
 outputs_unfiltered/
+
+# data & raw files
+data/
+outputs/
+outputs_unfiltered/
+
+# caches
+__pycache__/
+*.pyc
+
+# backups
+*.bak
+
+# env
+.venv/
