@@ -9,3 +9,8 @@ __pycache__/
 
 # editor/perl backups
 *.bak
+
+# local data/outputs
+/data/
+/outputs_unfiltered/
+/legacy/
