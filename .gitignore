@@ -2,3 +2,10 @@
 # generated
 outputs/*_anomaly_topN.txt
 outputs/consistency_labels_base.csv
+
+# python
+__pycache__/
+*.py[cod]
+
+# editor/perl backups
+*.bak
