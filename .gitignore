@@ -14,3 +14,14 @@ __pycache__/
 /data/
 /outputs_unfiltered/
 /legacy/
+
+# local / generated
+__pycache__/
+*.pyc
+scripts/__pycache__/
+*.bak
+
+# large local data (keep out of git)
+data/
+legacy/
+outputs_unfiltered/
