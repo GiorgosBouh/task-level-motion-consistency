@@ -1,236 +1,316 @@
-1) Project structure (paths you must know)
+Task-Level Motion Consistency
+=============================
+
+This repository contains the full analysis pipeline used in the paper:
+
+"When to Explain, When to Abstain: A Conditional Framework for Biomechanical Anomaly Interpretation"
+
+The code implements a task-level anomaly detection framework for human motion
+data, followed by a conditional interpretation layer that explicitly abstains
+from explanation when evidential support is insufficient.
+
+The repository is designed for transparency and full reproducibility.
+
+
+----------------------------------------------------------------------
+Project structure (paths you must know)
+----------------------------------------------------------------------
 
 Inputs
-	•	Raw data directory (not included in Git, ignored via .gitignore):
-	•	data/RawData/  (example)
-	•	The scripts expect trial files in a consistent format (see your existing dataset export).
+------
+Raw data directory (not included in Git; ignored via .gitignore):
+
+- data/RawData/        (example path)
+
+The scripts expect trial files in a consistent format (see dataset export).
+Raw data are not distributed with this repository.
+
 
 Outputs (paper artifacts are generated here)
-	•	outputs/ (generated; not committed)
-	•	Feature matrices per task:
-	•	outputs/stand_feature_matrix.csv
-	•	outputs/chair_feature_matrix.csv
-	•	outputs/sit_feature_matrix.csv
-	•	outputs/wheelchair_feature_matrix.csv
-	•	outputs/stand-frame_feature_matrix.csv
-	•	Anomaly scoring per task:
-	•	outputs/stand_anomaly_scores.csv
-	•	outputs/chair_anomaly_scores.csv
-	•	outputs/sit_anomaly_scores.csv
-	•	outputs/wheelchair_anomaly_scores.csv
-	•	outputs/stand-frame_anomaly_scores.csv
-	•	Top-N tables (used in paper tables/appendix):
-	•	outputs/*_anomaly_topN.txt
-	•	Cross-task family profiles (used for cosine similarity analysis):
-	•	outputs/_profiles_main.csv (recommended canonical)
-	•	outputs/cross_task_profiles.csv (older / may contain duplicates depending on past runs)
-	•	Cross-task null tests:
-	•	outputs/cosine_nulls_<taskA>_<taskB>_summary.csv
-	•	outputs/cosine_nulls_<taskA>_<taskB>_same_subject.csv
-	•	outputs/cosine_nulls_<taskA>_<taskB>_diff_subject.csv
-	•	outputs/cosine_nulls_<taskA>_<taskB>_perm_null.csv
+--------------------------------------------
+- outputs/             (generated; not committed)
 
-⸻
+Feature matrices per task:
+- outputs/stand_feature_matrix.csv
+- outputs/chair_feature_matrix.csv
+- outputs/sit_feature_matrix.csv
+- outputs/wheelchair_feature_matrix.csv
+- outputs/stand-frame_feature_matrix.csv
 
-2) What each main script does
+Anomaly scoring per task:
+- outputs/stand_anomaly_scores.csv
+- outputs/chair_anomaly_scores.csv
+- outputs/sit_anomaly_scores.csv
+- outputs/wheelchair_anomaly_scores.csv
+- outputs/stand-frame_anomaly_scores.csv
+
+Top-N tables (used in paper tables / appendix):
+- outputs/*_anomaly_topN.txt
+
+Cross-task family profiles (used for cosine similarity analysis):
+- outputs/profiles_main.csv          (canonical file used in the paper)
+- outputs/cross_task_profiles.csv    (older file; may contain duplicates)
+
+Cross-task null tests (example: chair vs stand):
+When running with:
+  --out-prefix outputs/cosine_nulls_chair_stand
+
+The following files are produced:
+- outputs/cosine_nulls_chair_stand_summary.csv
+- outputs/cosine_nulls_chair_stand_same_subject.csv
+- outputs/cosine_nulls_chair_stand_diff_subject.csv
+- outputs/cosine_nulls_chair_stand_perm_null.csv
+
+
+----------------------------------------------------------------------
+What each main script does
+----------------------------------------------------------------------
 
 Root-level pipeline
-	•	main.py
-Orchestrates the end-to-end run (depending on your configuration). Use it if you want a single entry point.
-	•	anomaly_task.py
-Task-generic anomaly scoring pipeline (reads a feature matrix, fits Ledoit–Wolf covariance, computes Mahalanobis², ranks trials, writes *_anomaly_scores.csv and *_anomaly_topN.txt).
-	•	anomaly_stand.py
-Specialization for stand / stand-frame variants (if your dataset splits stand contexts).
-	•	build_cross_task_profiles.py
-Builds subject-level family-composition profiles per task by aggregating the top-K anomalies per subject and normalizing family contributions to sum to 1.
-Output schema:
-	•	subject_id, task, family, score
+-------------------
+- main.py
+  Orchestrates the end-to-end pipeline (depending on configuration).
+  Can be used as a single entry point for full reproduction.
 
-scripts/ utilities (canonical for reviewer “red flags”)
-	•	scripts/extract_features.py
-Generic feature extractor for non-Kinect formatted inputs (depends on your file structure). Includes Butterworth filtering option.
-	•	scripts/extract_features_kinect.py
-Kinect-style feature extractor:
-	•	Computes a simple CoM-like proxy (mean of joints positions)
-	•	Derivatives via np.gradient (vel/acc/jerk magnitudes)
-	•	Optional Butterworth low-pass filtering
-	•	Smoothness is a single monotonic proxy:
-smoothness = 1 / (1 + RMS(jerk))
-Outputs per-trial summary stats (mean/std/range for speed/accel/jerk + scalar smoothness).
-	•	scripts/score_anomalies.py and scripts/score_anomalies_kinect.py
-Standalone scoring scripts (Ledoit–Wolf + Mahalanobis²) if you want to run scoring outside anomaly_task.py.
-	•	scripts/eval_cross_task_nulls.py
-Computes:
-	1.	same-subject cosine similarity across two tasks
-	2.	different-subject cosine similarity (cross-paired)
-	3.	a permutation null by shuffling subject-task pairing (or equivalent null construction)
-Writes the 4 CSV outputs listed above + prints summary.
-	•	explain_anomalies.py + scripts build_llm_prompts.py, run_ollama_jsonl.py, rewrite_explanations.py, make_llm_summaries.py, eval_llm_faithfulness.py
-Optional LLM reporting layer:
-	•	Builds prompts for high-confidence anomalies
-	•	Runs an LLM locally (Ollama) and enforces JSON schema
-	•	Evaluates coverage/faithfulness metrics
+- anomaly_task.py
+  Task-generic anomaly scoring pipeline.
+  Reads a feature matrix, fits a Ledoit–Wolf covariance model,
+  computes squared Mahalanobis distance, ranks trials,
+  and writes:
+    *_anomaly_scores.csv
+    *_anomaly_topN.txt
 
-⸻
+- anomaly_stand.py
+  Specialization for stand / stand-frame variants,
+  if the dataset distinguishes these contexts.
 
-3) Canonical run order (paper reproduction)
+- build_cross_task_profiles.py
+  Builds subject-level family-composition profiles per task by:
+  - selecting the top-K anomalous trials per subject,
+  - aggregating feature-family contributions,
+  - normalizing family scores to sum to 1.
 
-The commands below assume:
-	•	you are in /home/ilab/task-level-motion-consistency
-	•	source .venv/bin/activate
-	•	raw data exist under data/RawData/ (or your configured path)
+  Output schema:
+  subject_id, task, family, score
 
-Step 1 — Feature extraction (per task)
 
-Choose the extractor that matches your data format.
+scripts/ (utilities)
+--------------------
+- scripts/extract_features_kinect.py
+  Kinect-style feature extractor:
+  - Computes a simple center-of-mass-like proxy (mean joint position)
+  - Derivatives via numpy.gradient (speed / acceleration / jerk magnitudes)
+  - Optional Butterworth low-pass filtering
+  - Smoothness defined as:
+        smoothness = 1 / (1 + RMS(jerk))
 
-A) Kinect-like skeleton trials
-# Example: produce a unified features CSV (adjust input glob/path to your data)
+  Outputs per-trial summary statistics:
+  - mean / std / range for speed, acceleration, jerk
+  - scalar smoothness
+
+- scripts/extract_features.py
+  Generic feature extractor for non-Kinect formatted inputs.
+  Includes optional filtering.
+
+- scripts/score_anomalies_kinect.py
+- scripts/score_anomalies.py
+  Standalone anomaly scoring scripts (Ledoit–Wolf + Mahalanobis²),
+  useful if scoring is run outside anomaly_task.py.
+
+- scripts/eval_cross_task_nulls.py
+  Computes:
+    1. same-subject cosine similarity across two tasks
+    2. different-subject cosine similarity
+    3. permutation-based null distribution (task-label shuffle)
+
+  Writes four CSV outputs and prints summary statistics.
+
+
+Optional language-based reporting layer
+---------------------------------------
+Used only to reproduce the reporting / abstention analyses.
+
+- scripts/build_llm_prompts.py
+- scripts/run_ollama_jsonl.py
+- scripts/rewrite_explanations.py
+- scripts/make_llm_summaries.py
+- scripts/eval_llm_faithfulness.py
+
+This layer generates constrained natural-language summaries for
+high-confidence anomalies and explicitly abstains otherwise.
+It does not influence anomaly detection or ranking.
+
+
+----------------------------------------------------------------------
+Canonical run order (paper reproduction)
+----------------------------------------------------------------------
+
+Assumptions:
+- You are in: /home/ilab/task-level-motion-consistency
+- Virtual environment is active:
+    source .venv/bin/activate
+- Raw data exist under: data/RawData/
+
+
+Step 1 — Feature extraction
+---------------------------
+
+A) Kinect-like skeleton trials (no filtering)
+
 python scripts/extract_features_kinect.py \
   --in-dir data/RawData \
   --out outputs/features.csv \
   --fs 30 \
   --filter none
 
-  python scripts/extract_features_kinect.py \
+
+B) Filtering sensitivity analysis (Butterworth, 6 Hz)
+
+python scripts/extract_features_kinect.py \
   --in-dir data/RawData \
   --out outputs/features_filtered.csv \
   --fs 30 \
   --filter butter \
   --cutoff-hz 6.0
 
-  Step 2 — Build per-task feature matrices
 
-Depending on your setup, you may already have per-task matrices produced by the pipeline.
-If not, you must split outputs/features.csv into task-specific matrices:
-	•	outputs/stand_feature_matrix.csv
-	•	outputs/chair_feature_matrix.csv
-	•	outputs/sit_feature_matrix.csv
-	•	outputs/wheelchair_feature_matrix.csv
-	•	outputs/stand-frame_feature_matrix.csv
+Step 2 — Build per-task feature matrices
+----------------------------------------
+If not produced automatically by main.py,
+split outputs/features.csv into:
 
-(If you want, we can add a tiny scripts/split_by_task.py helper; currently this split may be handled inside main.py or in your existing workflow.)
+- outputs/stand_feature_matrix.csv
+- outputs/chair_feature_matrix.csv
+- outputs/sit_feature_matrix.csv
+- outputs/wheelchair_feature_matrix.csv
+- outputs/stand-frame_feature_matrix.csv
 
-⸻
 
-Step 3 — Score anomalies per task (Mahalanobis²)
+Step 3 — Score anomalies per task
+---------------------------------
+Run anomaly scoring for each task to produce:
 
-Run for each task:
-	•	outputs/<task>_anomaly_scores.csv
-	•	outputs/<task>_anomaly_topN.txt
+- outputs/*_anomaly_scores.csv
+- outputs/*_anomaly_topN.txt
+
+
 Step 4 — Build cross-task family profiles (Top-K aggregation)
+-------------------------------------------------------------
 
-This is the canonical step that feeds the cosine tables in the paper:
 python build_cross_task_profiles.py \
   --topk 10 \
   --scores-glob "outputs/*_anomaly_scores.csv" \
-  --out-csv outputs/_profiles_main.csv
-  Sanity check:
-  python - <<'PY'
+  --out-csv outputs/profiles_main.csv
+
+
+Sanity check:
+-------------
+python - <<'PY'
 import pandas as pd
-df=pd.read_csv("outputs/_profiles_main.csv")
+df = pd.read_csv("outputs/profiles_main.csv")
 print("rows:", len(df))
 print("tasks:", sorted(df["task"].unique()))
 print("subjects:", df["subject_id"].nunique())
 PY
 
-Step 5 — Cross-task similarity + null tests (chair vs stand)
 
-This directly supports:
-	•	same-subject vs different-subject comparison
-	•	permutation null
+Step 5 — Cross-task similarity and null tests (chair vs stand)
+--------------------------------------------------------------
 
-   python scripts/eval_cross_task_nulls.py \
-  --in-csv outputs/_profiles_main.csv \
+python scripts/eval_cross_task_nulls.py \
+  --in-csv outputs/profiles_main.csv \
   --task-a chair \
   --task-b stand \
   --perm 5000 \
   --out-prefix outputs/cosine_nulls_chair_stand
 
- Outputs:
-	•	outputs/cosine_nulls_chair_stand_summary.csv  (table-ready)
-	•	outputs/cosine_nulls_chair_stand_same_subject.csv
-	•	outputs/cosine_nulls_chair_stand_diff_subject.csv
-	•	outputs/cosine_nulls_chair_stand_perm_null.csv
 
-Repeat for other task pairs if needed (e.g., sit vs stand):
-python scripts/eval_cross_task_nulls.py \
-  --in-csv outputs/_profiles_main.csv \
-  --task-a sit \
-  --task-b stand \
-  --perm 5000 \
-  --out-prefix outputs/cosine_nulls_sit_stand
-
-  Step 6 (Optional) — LLM reporting layer (coverage/abstention tables)
-
-Only if you want to reproduce the JSON coverage + abstention tables:
-	1.	create prompts:
-   python scripts/build_llm_prompts.py --in outputs/stand_anomaly_scores.csv --out outputs/stand_prompts.jsonl
-	2.	run a local LLM (example with Ollama JSONL runner):
-   python scripts/run_ollama_jsonl.py --in outputs/stand_prompts.jsonl --out outputs/stand_llm.jsonl
-   3.	rewrite/normalize outputs:
-   python scripts/rewrite_explanations.py --in outputs/stand_llm.jsonl --out outputs/stand_explanations.csv
-   4.	optional faithfulness checks:
-   python scripts/eval_llm_faithfulness.py --in outputs/stand_explanations.csv
-
- 4) Mapping outputs to paper tables
-	•	Cross-task coverage & eligibility
-Derived from outputs/_profiles_main.csv by counting tasks per subject:
-	•	subjects with 1 task → insufficient_tasks
-	•	subjects with ≥2 tasks → eligible
-(Your paper reports N=30 profiled subjects, N=13 with exactly 2 tasks used for similarity.)
-	•	Cosine similarity summary & per-subject
-Derived from:
-	•	outputs/_profiles_main.csv
-	•	the cosine computations for eligible subjects
-and/or the summary output:
-	•	outputs/cosine_nulls_chair_stand_summary.csv (mean/median, etc.)
-	•	outputs/cosine_nulls_chair_stand_same_subject.csv (per-subject cosines)
-	•	LLM coverage / abstention / dominant-family agreement
-Derived from the explanation CSVs produced in Step 6.
-
-⸻
-
-5) Notes on reviewer “red flags” (what is already implemented)
-
-✅ Filtering option exists (Butterworth) in the Kinect extractor:
-	•	--filter butter --cutoff-hz 6.0
-
-✅ Smoothness is defined explicitly and consistent:
-	•	smoothness = 1 / (1 + RMS(jerk))
-
-✅ Mahalanobis decomposition implemented in scripts/score_anomalies.py:
-	•	Uses the quadratic-form identity d² = sum_i (x−μ)_i * (P(x−μ))_i
-
-✅ Null / permutation + same-subject vs different-subject:
-	•	scripts/eval_cross_task_nulls.py
-
-⸻
-
-6) Common pitfalls / sanity checks
-
-If you see duplicated header rows in CSV
-
-If a CSV accidentally contains repeated headers, clean it before analysis.
-
-If tasks look wrong in cross_task_profiles.csv
-
-Always use the canonical:
-	•	outputs/_profiles_main.csv produced by build_cross_task_profiles.py
-
-If eval_cross_task_nulls.py errors with KeyError(task)
-
-python - <<'PY'
-import pandas as pd
-df=pd.read_csv("outputs/_profiles_main.csv")
-print(sorted(df["task"].unique()))
-PY
-
-7) Re-run everything from scratch (clean)
-
-rm -rf outputs/*
-mkdir -p outputs
-# then run Steps 1→5 again
+Outputs:
+- outputs/cosine_nulls_chair_stand_summary.csv
+- outputs/cosine_nulls_chair_stand_same_subject.csv
+- outputs/cosine_nulls_chair_stand_diff_subject.csv
+- outputs/cosine_nulls_chair_stand_perm_null.csv
 
 
+Step 6 (Optional) — Language-based reporting layer
+--------------------------------------------------
+Used only to reproduce coverage / abstention tables.
 
+1. Build prompts:
+   python scripts/build_llm_prompts.py \
+     --in outputs/stand_anomaly_scores.csv \
+     --out outputs/stand_prompts.jsonl
+
+2. Run local LLM (example with Ollama):
+   python scripts/run_ollama_jsonl.py \
+     --in outputs/stand_prompts.jsonl \
+     --out outputs/stand_llm.jsonl
+
+3. Rewrite and normalize explanations:
+   python scripts/rewrite_explanations.py \
+     --in outputs/stand_llm.jsonl \
+     --out outputs/stand_explanations.csv
+
+4. Optional faithfulness checks:
+   python scripts/eval_llm_faithfulness.py \
+     --in outputs/stand_explanations.csv
+
+
+----------------------------------------------------------------------
+Mapping outputs to paper results
+----------------------------------------------------------------------
+
+- Task coverage and eligibility:
+  Derived from outputs/profiles_main.csv
+  Subjects with one task → insufficient_tasks
+  Subjects with two tasks → eligible for cross-task analysis
+
+- Cross-task cosine similarity:
+  Derived from:
+    outputs/profiles_main.csv
+    outputs/cosine_nulls_*_same_subject.csv
+
+- Permutation null statistics:
+  Derived from:
+    outputs/cosine_nulls_*_perm_null.csv
+
+- Reporting coverage and abstention:
+  Derived from the optional LLM outputs in Step 6
+
+
+----------------------------------------------------------------------
+Environment and requirements
+----------------------------------------------------------------------
+
+Python version:
+- Python 3.10 or newer
+
+Required packages:
+- numpy >= 1.26
+- pandas >= 2.2
+- scipy >= 1.11
+- scikit-learn >= 1.4
+- tqdm >= 4.66
+- python-dotenv >= 1.0
+
+Optional (for plotting or reporting):
+- matplotlib >= 3.8
+- requests >= 2.31
+
+
+Installation:
+-------------
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+
+----------------------------------------------------------------------
+Notes for reviewers
+----------------------------------------------------------------------
+
+- Raw data are excluded by design.
+- All analysis steps are deterministic.
+- Filtering, anomaly detection, and interpretation are explicitly separated.
+- Abstention is treated as a valid scientific outcome.
+- The repository corresponds exactly to the analyses reported in the paper.
